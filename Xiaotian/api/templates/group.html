@@ -1,0 +1,26 @@
+<!-- templates/group.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Group Page</title>
+    <link rel="stylesheet" href="../static/css/group.css">
+</head>
+<body>
+    <h1>Group Page</h1>
+
+    <h2>Group Info</h2>
+
+    {% for group in groups %}
+        <div class="Your group">
+            <h3>{{ group["name"] }}</h3>
+            <p>Description: {{ group["description"] }}</p>
+            <p>Status: {{ group["status"] }}</p>
+        </div>
+    {% endfor %}
+
+    <a href="{{ url_for('user_info') }}" class="btn btn-primary">Back to User Info</a>
+</body>
+</html>

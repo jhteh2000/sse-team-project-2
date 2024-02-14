@@ -1,0 +1,19 @@
+{
+    "groups": [
+        {
+            "name": "Tech Enthusiasts",
+            "description": "A group for discussing the latest tech trends.",
+            "status": "pending"
+        },
+        {
+            "name": "Fitness Club",
+            "description": "Join us for workouts and healthy living tips.",
+            "status": "pending"
+        },
+        {
+            "name": "Bookworms",
+            "description": "A book club for avid readers.",
+            "status": "joined"
+        }
+    ]
+}
