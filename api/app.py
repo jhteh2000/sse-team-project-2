@@ -1,13 +1,18 @@
 from flask import Flask, render_template
 from dotenv import load_dotenv
+import os
 from flask_login import LoginManager
 
 load_dotenv()
 
+# Flask app configuration
 app = Flask(__name__)
+app.secret_key = os.getenv("FLASK_SECRET_KEY")
 
+# Setting up flask login manager
 login_manager = LoginManager()
 login_manager.init_app(app)
+login_manager.login_view = "login" 
 
 @login_manager.user_loader
 def load_user(user_id):
