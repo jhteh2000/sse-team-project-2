@@ -35,8 +35,8 @@ def group():
 
 @app.route("/login")
 def login():
-    return "Login"
+    return render_template("login.html")
 
 @app.route("/register")
 def register():
-    return "Register"
+    return render_template("register.html")
