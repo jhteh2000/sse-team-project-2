@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Media App</title>
+    <link rel="stylesheet" href="../static/css/header.css">
+    <link rel="stylesheet" href="../static/css/group.css">
+</head>
+<body>
+    <!-- <header> -->
+        <!-- <h1>Foodie Partie</h1>
+        <button id="logoutButton" onclick="logout()">Logout</button>
+    </header> -->
+    <div class="header">
+        <h1>Foodie Party</h1>
+        <div class="auth-links">
+            {% if not current_user.is_authenticated %}
+            <a href="{{ url_for('login') }}">Login</a>
+            <a href="{{ url_for('register') }}">Register</a>
+            {% else %}
+            <a href="{{ url_for('user_info') }}">My Profile</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="container">
+        <div id="buttons">
+            <button onclick="openModal('create')">Create Group</button>
+            <!-- <button onclick="openModal('join')">Join Group</button> -->
+        </div>
+
+        <h2>Pending Invitations</h2>
+        <table id="pending">
+            <tr>
+                <th>No</th>
+                <th>Group Name</th>
+                <th>Action</th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>New Year 2025</td>
+                <td>
+                    <button class="accept-btn">Accept</button>
+                    <button class="decline-btn">Decline</button>
+                </td>
+            </tr>
+        </table>
+
+        <h2>Upcoming Parties</h2>
+        <table id="joined">
+            <tr>
+                <th>No</th>
+                <th>Group Name</th>
+                <th>Date</th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>Christmas 2024</td>
+                <td>25/12/2024</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Modal for creating/joining group -->
+    <div id="createGroupModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 id="modalTitle"></h2>
+            <!-- Placeholder content for creating/joining group -->
+            <p>Placeholder content for creating/joining group...</p>
+        </div>
+    </div>
+
+    <script src="../static/js/group.js"></script>
+</body>
+</html>
