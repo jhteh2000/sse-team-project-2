@@ -187,7 +187,7 @@ th:nth-child(3) {
     width: 30%;
 }
   
-  /* Button Styles */
+/* Button Styles */
 .accept-btn, .decline-btn {
     padding: 6px 12px;
     border: none;
@@ -212,4 +212,58 @@ th:nth-child(3) {
     margin-left: 2px; /* Adjust spacing between buttons */
     margin-right: 2px;
 }
-  
+
+.view-description-btn {
+    padding: 6px 12px; /* Consistent padding */
+    font-size: 12px; /* Consistent font size */
+    border: none;
+    cursor: pointer;
+    border-radius: 4px; /* Consistent border-radius */
+    margin-left: 2px; /* Adjust spacing between buttons */
+    margin-right: 2px;
+}
+
+.button-cell {
+    white-space: nowrap;
+}
+
+
+/* Style for Back to Front Page button */
+.btn-primary {
+    padding: 12px 24px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 5px;
+    text-decoration: none;
+    display: inline-block;
+    margin-right: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.table-container {
+    margin-top: 20px;
+}
+
+/* Style for the first table (Pending Invitations) */
+.pending-table {
+    margin-bottom: 20px;
+}
+
+/* Style for the second table (Upcoming Parties) */
+.upcoming-table {
+    margin-bottom: 20px;
+}
+
+.table-title {
+    color: #000000; /* Adjust the color as needed */
+    font-size: 30px; /* Adjust the font size as needed */
+    margin-bottom: 10px; /* Add some bottom margin for spacing */
+    text-decoration: underline; /* Add underline */
+    /* Add any additional styling properties here */
+}
