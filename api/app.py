@@ -1,7 +1,7 @@
 from flask import Flask, render_template, redirect, url_for
 from dotenv import load_dotenv
 import os
-from flask_login import LoginManager
+from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 import json
 
 load_dotenv()
@@ -34,7 +34,6 @@ def index():
 @app.route("/food")
 def food():
     return render_template("food.html")
-
 
 @app.route("/group")
 def group():
@@ -69,4 +68,5 @@ def profile():
 
 @app.route("/logout")
 def logout():
+    logout_user()
     return redirect(url_for("index"))
