@@ -30,6 +30,7 @@
         <div id="buttons">
             <button onclick="openModal('create')">Create Group</button>
             <!-- <button onclick="openModal('join')">Join Group</button> -->
+            <a href="{{ url_for('index') }}" class="btn btn-primary">Back to Front Page</a>
         </div>
 
         <h2>Pending Invitations</h2>
@@ -39,14 +40,19 @@
                 <th>Group Name</th>
                 <th>Action</th>
             </tr>
-            <tr>
-                <td>1</td>
-                <td>New Year 2025</td>
-                <td>
-                    <button class="accept-btn">Accept</button>
-                    <button class="decline-btn">Decline</button>
-                </td>
-            </tr>
+            {% for i in range(groups|count) %}
+                {% if groups[i]["status"] == 'pending' %}
+                <tr>
+                    <td>{{ i+1 }}</td>
+                    <td>{{ groups[i]["name"] }}</td>
+                    <td class="button-cell">
+                        <button class="accept-btn">Accept</button>
+                        <button class="decline-btn">Decline</button>
+                        <button class="view-description-btn" onclick="openDescriptionModal('openDescription', {{ groups[i] }})">Description</button>
+                    </td>                   
+                </tr>
+                {% endif %}
+            {% endfor %}
         </table>
 
         <h2>Upcoming Parties</h2>
@@ -54,13 +60,19 @@
             <tr>
                 <th>No</th>
                 <th>Group Name</th>
-                <th>Date</th>
+                <th>Action</th>
             </tr>
-            <tr>
-                <td>1</td>
-                <td>Christmas 2024</td>
-                <td>25/12/2024</td>
-            </tr>
+            {% for i in range(groups|count) %}
+                {% if groups[i]["status"] == 'joined' %}
+                <tr>
+                    <td>{{ i+1 }}</td>
+                    <td>{{ groups[i]["name"] }}</td>
+                    <td class="button-cell">
+                        <button class="view-description-btn" onclick="openDescriptionModal('openDescription', {{ groups[i] }})">Description</button>
+                    </td> 
+                </tr>
+                {% endif %}
+            {% endfor %}
         </table>
     </div>
 
@@ -73,6 +85,15 @@
             <p>Placeholder content for creating/joining group...</p>
         </div>
     </div>
+
+    <div id="groupDescriptionModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeDescriptionModal()">&times;</span>
+            <h2 id="descriptionModalTitle">Group Description</h2>
+            <p id="groupDescription"></p>
+        </div>
+    </div>
+    
 
     <script src="../static/js/group.js"></script>
 </body>

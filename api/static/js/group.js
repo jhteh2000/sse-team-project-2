@@ -20,6 +20,30 @@ function closeModal() {
     modal.style.display = "none";
 }
 
+function openDescriptionModal(action, index) {
+    console.log("openDescriptionModal called with action:", action, "and index:", index);
+
+    var descriptionModal = document.getElementById("groupDescriptionModal");
+    var descriptionContent = document.getElementById("groupDescription");
+
+    // Set modal content based on action
+    if (action === 'openDescription') {
+        //var n = parseInt(index);
+        var description = index.description;
+        console.log("Description:", description);
+        descriptionContent.textContent = description;
+    }
+
+    // Display the modal
+    descriptionModal.style.display = "block";
+}
+
+function closeDescriptionModal() {
+    var descriptionModal = document.getElementById("groupDescriptionModal");
+    descriptionModal.style.display = "none";
+}
+
+
 // Placeholder function for logout
 function logout() {
     alert("Logout functionality will be implemented here.");
@@ -37,14 +61,15 @@ function handleInvitation(button, action) {
     // If the action is accept, move the row to the joined table
     if (action === 'accept') {
         var groupName = row.getElementsByTagName('td')[1].innerText;
-        var eventDate = getEventDate(groupName); // Assuming this function retrieves the event date
+        var description = row.getElementsByTagName('td')[2].querySelector('.view-description-btn').outerHTML;
+        console.log(description);
         
         // Append the row to the "Joined Parties" table
         var joinedTable = document.getElementById("joined");
         var newRow = joinedTable.insertRow();
         newRow.innerHTML = '<td></td>' + // Auto-numbered column
                            '<td>' + groupName + '</td>' +
-                           '<td>' + eventDate + '</td>';
+                           '<td>' + description + '</td>';
                            
         // Re-number the rows
         renumberRows(joinedTable);

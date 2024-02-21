@@ -1,7 +1,8 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect, url_for
 from dotenv import load_dotenv
 import os
-from flask_login import LoginManager
+from flask_login import LoginManager, login_user, logout_user, login_required, current_user
+import json
 
 load_dotenv()
 
@@ -36,7 +37,21 @@ def food():
 
 @app.route("/group")
 def group():
-    return render_template("group.html")
+    try:
+        # Load group data from the JSON file (replace with your actual file path)
+        with open("group.json", "r") as json_file:
+            groups_data = json.load(json_file)
+
+        # Print loaded data for debugging
+        print("Loaded data:", groups_data)
+
+        # Render the template and pass the data
+        return render_template("group.html", groups=groups_data["groups"])
+
+    except Exception as e:
+        # Print any exception for debugging
+        print("Error:", str(e))
+        return "An error occurred."
 
 @app.route("/login")
 def login():
@@ -45,3 +60,13 @@ def login():
 @app.route("/register")
 def register():
     return render_template("register.html")
+
+@app.route("/profile")
+def profile():
+    favorites_placeholder = {"count": 0}
+    return render_template("profile.html", favorites=favorites_placeholder)
+
+@app.route("/logout")
+def logout():
+    logout_user()
+    return redirect(url_for("index"))
