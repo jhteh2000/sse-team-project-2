@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ranking Table</title>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 50%;
+            margin: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tbody {
+            cursor: grab;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Rank Your Favorite Items</h1>
+
+    {% if favorites["count"] > 0 %}
+        <table id="rankTable">
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Favorite Item</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in range(min(favorites["count"], 5)) %}
+                    <tr class="rank-item">
+                        <td class="rank">{{ i + 1 }}</td>
+                        <td>{{ favorites['name'][i] }}</td>
+                    </tr>
+                {% endfor %}
+                {% for i in range(min(favorites["count"], 5)) %}
+                    <tr class="rank-item">
+                        <td class="rank">{{ i + 1 }}</td>
+                        <td>{{ favorites['name'][i] }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <script>
+            $(function() {
+                $("#rankTable tbody").sortable({
+                    axis: "y",
+                    update: function (event, ui) {
+                        updateRank();
+                    }
+                }).disableSelection();
+
+                function updateRank() {
+                    $("#rankTable tbody tr").each(function (index) {
+                        $(this).find(".rank").text(index + 1);
+                    });
+                }
+            });
+        </script>
+    {% else %}
+        <p>No favorite items available to rank.</p>
+    {% endif %}
+
+</body>
+</html>
