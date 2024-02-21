@@ -197,6 +197,56 @@ def user_info():
 
     return render_template("userInfo.html", favorites=favorites)
 
+@app.route("/choose")
+@login_required
+def choose():
+    uri_list = []
+    for dish in return_data("Favorites", current_user.email):
+        uri_list.append(dish["dish_uri"])
+
+    # For Testing (Will be replaced with Requests)
+    # with open(join("../samplejson", "recipe.json"), "r") as read_file:
+    #     data = json.load(read_file)
+
+    favorites = {
+        "count": 0,
+        "uri": [],
+        "image": [],
+        "name": [],
+        "calories": [],
+        "protein": [],
+        "ingredient": [],
+        "recipeURL": [],
+    }
+
+    # # For Production
+    response = get_response_uri(uri_list)
+    if response.status_code == 200:  #Check if the response if successful 
+        data = response.json()
+
+        for recipe in data["hits"]:
+            # TESTING ONLY (DELETE THIS IF STATEMENT FOR PRODUCTION)
+            if recipe["recipe"]["uri"] in uri_list: 
+                favorites["uri"].append(recipe["recipe"]["uri"])
+                favorites["image"].append(recipe["recipe"]["image"])
+                favorites["name"].append(recipe["recipe"]["label"])
+                favorites["calories"].append(
+                    round(
+                        recipe["recipe"]["totalNutrients"]["ENERC_KCAL"]["quantity"],
+                        ndigits=3,
+                    )
+                )
+                favorites["protein"].append(
+                    round(
+                        recipe["recipe"]["totalNutrients"]["PROCNT"]["quantity"], ndigits=3
+                    )
+                )
+                favorites["ingredient"].append(recipe["recipe"]["ingredientLines"])
+                favorites["recipeURL"].append(recipe["recipe"]["url"])
+                favorites["count"] += 1
+
+    return render_template("userInfo.html", favorites=favorites)
+
 @app.route("/logout")
 @login_required
 def logout():
