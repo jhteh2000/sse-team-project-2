@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect, url_for
 from dotenv import load_dotenv
 import os
 from flask_login import LoginManager
@@ -45,3 +45,12 @@ def login():
 @app.route("/register")
 def register():
     return render_template("register.html")
+
+@app.route("/profile")
+def profile():
+    favorites_placeholder = {"count": 0}
+    return render_template("profile.html", favorites=favorites_placeholder)
+
+@app.route("/logout")
+def logout():
+    return redirect(url_for("index"))
