@@ -2,6 +2,7 @@ from flask import Flask, render_template
 from dotenv import load_dotenv
 import os
 from flask_login import LoginManager
+import json
 
 load_dotenv()
 
@@ -34,9 +35,24 @@ def index():
 def food():
     return render_template("food.html")
 
+
 @app.route("/group")
 def group():
-    return render_template("group.html")
+    try:
+        # Load group data from the JSON file (replace with your actual file path)
+        with open("group.json", "r") as json_file:
+            groups_data = json.load(json_file)
+
+        # Print loaded data for debugging
+        print("Loaded data:", groups_data)
+
+        # Render the template and pass the data
+        return render_template("group.html", groups=groups_data["groups"])
+
+    except Exception as e:
+        # Print any exception for debugging
+        print("Error:", str(e))
+        return "An error occurred."
 
 @app.route("/login")
 def login():

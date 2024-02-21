@@ -1,1 +1,0 @@
-# sse-team-project-1
