@@ -1,0 +1,31 @@
+// This code is prepared for reading the received data.
+
+const express = require('express');
+const bodyParser = require('body-parser');
+
+const app = express();
+const port = 3000;
+
+app.use(bodyParser.json());
+
+app.post('/submit-group', (req, res) => {
+    const groupData = req.body;
+    
+    // Simulate storing data in a database (this is just an example)
+    // Replace this with actual database operations
+    storeDataInDatabase(groupData);
+
+    // Send a response if needed
+    res.json({ message: 'Group data received successfully' });
+});
+
+function storeDataInDatabase(data) {
+    // Perform database operations to store the data
+    // For example, you might use an ORM like Sequelize or a database driver like Mongoose
+    // This function should be replaced with actual database operations
+    console.log('Storing data in the database:', data);
+}
+
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
+});
