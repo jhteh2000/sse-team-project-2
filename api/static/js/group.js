@@ -1,4 +1,3 @@
-// Function to open modal
 function openModal(action) {
     var modal = document.getElementById("createGroupModal");
     var modalTitle = document.getElementById("modalTitle");
@@ -7,9 +6,9 @@ function openModal(action) {
     if (action === 'create') {
         modalTitle.textContent = "Create Group";
     }
-    // else {
-    //     modalTitle.textContent = "Join Group";
-    // }
+
+    // Clear previous form input values
+    document.getElementById("createGroupForm").reset();
 
     modal.style.display = "block";
 }
@@ -19,6 +18,46 @@ function closeModal() {
     var modal = document.getElementById("createGroupModal");
     modal.style.display = "none";
 }
+
+// Function to handle form submission
+function submitGroup() {
+    var groupName = document.getElementById("groupName").value;
+    var groupDetail = document.getElementById("groupDetail").value;
+    var groupMembers = document.getElementById("groupMembers").value.split(';');
+
+    var groupData = {
+        groupName: groupName,
+        groupDetail: groupDetail,
+        groupMembers: groupMembers
+    };
+
+    var jsonData = JSON.stringify(groupData);
+
+    console.log('JSON data sent:', jsonData);
+
+    fetch('URL', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: jsonData,
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Server response:', data);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+
+    closeModal();
+}
+
 
 function openDescriptionModal(action, index) {
     console.log("openDescriptionModal called with action:", action, "and index:", index);
