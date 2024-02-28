@@ -35,7 +35,7 @@ function submitGroup() {
 
     console.log('JSON data sent:', jsonData);
 
-    fetch('URL', {
+    fetch('http://local/submit-group', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
