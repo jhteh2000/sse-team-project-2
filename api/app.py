@@ -32,12 +32,15 @@ def load_user(user_id):
 def index():
     return render_template("index.html")
 
+# Food finder page
 @app.route("/food")
 def food():
     return render_template("food.html")
 
+# The form submitted in the food page will go to this route
 @app.route("/food/submit", methods=["POST"])
 def submit():
+    # Retrieve the form value and add into a dictionary
     args = {}
     args["dishname"] = request.form.get("dishname")
     args["diet"] = request.form.getlist("diet")
@@ -50,6 +53,7 @@ def submit():
     if response.status_code == 200:
         return redirect(url_for("foodSearchResults", data=response.text))
 
+# Food finder search results page
 @app.route("/food/results")
 def foodSearchResults():
     data = json.loads(request.args.get("data"))
