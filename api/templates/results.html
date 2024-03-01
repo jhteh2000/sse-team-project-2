@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Food Gallery</title>
+  <link rel="stylesheet" href="../static/css/results.css">
+</head>
+<body>
+  
+  <h1 class="food-list-header"> Here's the food list! </h1>
+
+	{% if current_user.is_authenticated %}
+  <a href="{{ url_for('user_info') }}" class="my-profile-button">My Profile</a>
+  {% else %}
+  <a href="{{ url_for('login') }}" class="my-profile-button">Log In</a>
+  {% endif %}
+
+  {% for i in range([20, result_args['count']]|min) %}
+  <div class="food-box" data-uri='{{ result_args["uri"][i] | tojson }}' data-ingredientlist='{{ result_args["ingredient"][i] | tojson }}' data-recipeurl='{{ result_args["recipeURL"][i] | tojson }}'>
+    <img src="{{ result_args['image'][i] }}" alt="Food Image">
+    <h3>{{ result_args['name'][i] }}</h3>
+    <div class="details">
+      <p>Calories: {{ result_args['calories'][i] }} kcal</p>
+      <p>Protein: {{ result_args['protein'][i] }} g</p>
+    </div>
+
+    {% if current_user.is_authenticated %}
+      {% if result_args['uri'][i] in favorites %}
+        <button class="favorite-btn active" data-food-id="{{ i }}"></button>
+      {% else %}
+        <button class="favorite-btn" data-food-id="{{ i }}"></button>
+      {% endif %}
+    {% endif %}
+    <br><br>
+  </div>
+  {% else %}
+  <b class="no-results-text">No results...</b>
+  {% endfor %}
+
+  <div id="hoverWindow" class="hidden">
+    <div id="contentContainer">
+      <!-- Content will be added dynamically here -->
+    </div>
+    <br>
+    <a href="#" id="closeWindowBtn"></a>
+  </div>
+
+  <!-- Button Container placed right after the userProfileContainer -->
+  <div class="button-container">
+    <a href="/" class="button">Return to Homepage</a>
+  </div>
+
+  <script src="../static/js/recipe.js"></script>
+  <script src="../static/js/storeFav.js"></script>
+</body>
+<style>
+  body {
+    background-image: url('https://img.freepik.com/premium-photo/abstract-dark-wooden-background-vintage-tone-style_84485-386.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+  }
+</style> 
+</html>

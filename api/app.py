@@ -1,8 +1,9 @@
-from flask import Flask, render_template, redirect, url_for
+from flask import Flask, render_template, redirect, url_for, request
 from dotenv import load_dotenv
 import os
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 import json
+import requests
 
 load_dotenv()
 
@@ -34,6 +35,26 @@ def index():
 @app.route("/food")
 def food():
     return render_template("food.html")
+
+@app.route("/food/submit", methods=["POST"])
+def submit():
+    args = {}
+    args["dishname"] = request.form.get("dishname")
+    args["diet"] = request.form.getlist("diet")
+    args["health"] = request.form.getlist("health")
+    args["cuisine"] = request.form.getlist("cuisine")
+    args["dish"] = request.form.getlist("dish")
+
+    response = requests.post("http://127.0.0.1:4000", json=args)
+
+    if response.status_code == 200:
+        return redirect(url_for("foodSearchResults", data=response.text))
+
+@app.route("/food/results")
+def foodSearchResults():
+    data = json.loads(request.args.get("data"))
+
+    return render_template("results.html", result_args=data)
 
 @app.route("/group")
 def group():
