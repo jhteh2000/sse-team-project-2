@@ -12,10 +12,11 @@ class User(UserMixin):
     def get_id(self):
         return self.email
 
-    def get(email):
+    @classmethod
+    def get(cls, email):
         user_data = fetch_user_info(email)
         if user_data:
-            user = User(user_data[0]['email'], user_data[0]['firstname'], user_data[0]['lastname'], user_data[0]['password'])
+            user = cls(user_data[0]['email'], user_data[0]['firstname'], user_data[0]['lastname'], user_data[0]['password'])
         else:
             user = None
         return user
