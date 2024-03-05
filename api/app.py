@@ -70,23 +70,54 @@ def foodSearchResults():
     return render_template("results.html", result_args=data)
 
 
+# @app.route("/group")
+# def group():
+#     try:
+#         # Load group data from the JSON file (replace with your actual file path)
+#         with open("group.json", "r") as json_file:
+#             groups_data = json.load(json_file)
+
+#         # Print loaded data for debugging
+#         print("Loaded data:", groups_data)
+
+#         # Render the template and pass the data
+#         return render_template("group.html", groups=groups_data["groups"])
+
+#     except Exception as e:
+#         # Print any exception for debugging
+#         print("Error:", str(e))
+#         return "An error occurred."
+
 @app.route("/group")
 def group():
     try:
-        # Load group data from the JSON file (replace with your actual file path)
-        with open("group.json", "r") as json_file:
-            groups_data = json.load(json_file)
+        server_url = "http://127.0.0.1:3000/display-user-groups"
+        payload = {'userEmail': 'user1@gmail.com'}
+        headers = {'Content-Type': 'application/json'}
 
-        # Print loaded data for debugging
-        print("Loaded data:", groups_data)
+        print(f'Sending request to {server_url} with payload: {payload}')
+        response = requests.post(server_url, json=payload, headers=headers)
+        response.raise_for_status()
 
-        # Render the template and pass the data
+        groups_data = response.json()
+        print(f'Received response: {groups_data}')
+
         return render_template("group.html", groups=groups_data["groups"])
-
+    except requests.HTTPError as http_err:
+        print(f"HTTP error occurred: {http_err}")
+        return f"HTTP error occurred: {http_err}", 500
     except Exception as e:
-        # Print any exception for debugging
+        print(f"An error occurred: {str(e)}")
+        return f"An error occurred: {str(e)}", 500
+
+
+    except requests.HTTPError as http_err:
+        # If there is an HTTPError, return the error message
+        return f"HTTP error occurred: {http_err}", 500
+    except Exception as e:
+        # For other exceptions, print and return the error message
         print("Error:", str(e))
-        return "An error occurred."
+        return f"An error occurred: {str(e)}", 500
 
 
 @app.route("/login", methods=["GET", "POST"])

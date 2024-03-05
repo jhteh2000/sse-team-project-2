@@ -34,10 +34,10 @@
                 <th>Action</th>
             </tr>
             {% for i in range(groups|count) %}
-                {% if groups[i]["status"] == 'pending' %}
+                {% if groups[i]["status"] == 0 %}
                 <tr>
                     <td>{{ i+1 }}</td>
-                    <td>{{ groups[i]["name"] }}</td>
+                    <td>{{ groups[i]["group_name"] }}</td>
                     <td class="button-cell">
                         <button class="accept-btn">Accept</button>
                         <button class="decline-btn">Decline</button>
@@ -56,10 +56,10 @@
                 <th>Action</th>
             </tr>
             {% for i in range(groups|count) %}
-                {% if groups[i]["status"] == 'joined' %}
+                {% if groups[i]["status"] != 0 %}
                 <tr>
                     <td>{{ i+1 }}</td>
-                    <td>{{ groups[i]["name"] }}</td>
+                    <td>{{ groups[i]["group_name"] }}</td>
                     <td class="button-cell">
                         <button class="view-description-btn" onclick="openDescriptionModal('openDescription', {{ groups[i] }})">Description</button>
                     </td> 
