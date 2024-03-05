@@ -74,7 +74,7 @@ def foodSearchResults():
 def group():
     try:
         # Load group data from the JSON file (replace with your actual file path)
-        with open("group.json", "r") as json_file:
+        with open("../group.json", "r") as json_file:
             groups_data = json.load(json_file)
 
         # Print loaded data for debugging
@@ -88,6 +88,26 @@ def group():
         print("Error:", str(e))
         return "An error occurred."
 
+@app.route("/group-info")
+def group_info():
+    group_name = request.args.get('group_name')
+    try:
+        # Load user info data from the JSON file (replace with your actual file path)
+        with open("../group_info.json", "r") as json_file:
+            group_info_data = json.load(json_file)
+
+        # Print loaded data for debugging
+        print("Loaded data:", group_info_data)
+
+        # Render the template and pass the data
+        return render_template("group_info.html",group_name=group_name ,user_info=group_info_data)
+
+    except Exception as e:
+        # Print any exception for debugging
+        print("Error:", str(e))
+        return "An error occurred."
+
+        
 
 @app.route("/login", methods=["GET", "POST"])
 def login():

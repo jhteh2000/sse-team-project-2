@@ -30,6 +30,7 @@
         <table id="pending">
             <tr>
                 <th>No</th>
+                <th>Group ID</th>
                 <th>Group Name</th>
                 <th>Action</th>
             </tr>
@@ -37,7 +38,8 @@
                 {% if groups[i]["status"] == 'pending' %}
                 <tr>
                     <td>{{ i+1 }}</td>
-                    <td>{{ groups[i]["name"] }}</td>
+                    <td>{{ groups[i]["group_id"] }}</td>
+                    <td><a href="{{ url_for('group_info', group_name=groups[i]['group_name']) }}">{{ groups[i]["group_name"] }}</a></td>
                     <td class="button-cell">
                         <button class="accept-btn">Accept</button>
                         <button class="decline-btn">Decline</button>
@@ -52,6 +54,7 @@
         <table id="joined">
             <tr>
                 <th>No</th>
+                <th>Group ID</th>
                 <th>Group Name</th>
                 <th>Action</th>
             </tr>
@@ -59,7 +62,7 @@
                 {% if groups[i]["status"] == 'joined' %}
                 <tr>
                     <td>{{ i+1 }}</td>
-                    <td>{{ groups[i]["name"] }}</td>
+                    <td><a href="{{ url_for('group_info', group_name=groups[i]['name']) }}">{{ groups[i]["name"] }}</a></td>
                     <td class="button-cell">
                         <button class="view-description-btn" onclick="openDescriptionModal('openDescription', {{ groups[i] }})">Description</button>
                     </td> 

@@ -1,0 +1,40 @@
+{
+    "members":  [
+        {
+            "email": "Big@gmail.com",
+            "first_name": "Big",
+            "last_name": "Boy",
+            "status": "1"
+        },
+        {
+            "email": "Leader@gmail.com",
+            "first_name": "Leader",
+            "last_name": "Boy",
+            "status": "2"                
+        },
+        {
+            "email": "Notsure@gmail.com",
+            "first_name": "Notsure",
+            "last_name": "Boy",
+            "status": "0"                
+        }
+    ],
+
+    "Top_votes":     [
+        {
+            "dish_uri": "Egg"
+        },
+        {
+            "dish_uri": "Fish"
+        },
+        {
+            "dish_uri": "Chips"
+        },
+        {
+            "dish_uri": "PEES"
+        },
+        {
+            "dish_uri": "Chicken Breast"
+        }
+    ]
+}
