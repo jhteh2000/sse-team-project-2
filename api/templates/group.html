@@ -30,16 +30,16 @@
         <table id="pending">
             <tr>
                 <th>No</th>
-                <th>Group ID</th>
                 <th>Group Name</th>
+                <th>Group ID</th>
                 <th>Action</th>
             </tr>
             {% for i in range(groups|count) %}
-                {% if groups[i]["status"] == 'pending' %}
+                {% if groups[i]["status"] == 0 %}
                 <tr>
                     <td>{{ i+1 }}</td>
+                    <td><a href="{{ url_for('group_info', group_name=groups[i]['group_name'], group_id=groups[i]['group_id']) }}">{{ groups[i]["group_name"] }}</a></td>
                     <td>{{ groups[i]["group_id"] }}</td>
-                    <td><a href="{{ url_for('group_info', group_name=groups[i]['group_name']) }}">{{ groups[i]["group_name"] }}</a></td>
                     <td class="button-cell">
                         <button class="accept-btn">Accept</button>
                         <button class="decline-btn">Decline</button>
@@ -54,15 +54,16 @@
         <table id="joined">
             <tr>
                 <th>No</th>
-                <th>Group ID</th>
                 <th>Group Name</th>
+                <th>Group ID</th>
                 <th>Action</th>
             </tr>
             {% for i in range(groups|count) %}
-                {% if groups[i]["status"] == 'joined' %}
+                {% if groups[i]["status"] != 0 %}
                 <tr>
                     <td>{{ i+1 }}</td>
-                    <td><a href="{{ url_for('group_info', group_name=groups[i]['name']) }}">{{ groups[i]["name"] }}</a></td>
+                    <td><a href="{{ url_for('group_info', group_name=groups[i]['group_name'], group_id=groups[i]['group_id']) }}">{{ groups[i]["group_name"] }}</a></td>
+                    <td>{{ groups[i]["group_id"] }}</td>
                     <td class="button-cell">
                         <button class="view-description-btn" onclick="openDescriptionModal('openDescription', {{ groups[i] }})">Description</button>
                     </td> 

@@ -70,44 +70,96 @@ def foodSearchResults():
     return render_template("results.html", result_args=data)
 
 
+# @app.route("/group")
+# def group():
+#     try:
+#         # Load group data from the JSON file (replace with your actual file path)
+#         with open("group.json", "r") as json_file:
+#             groups_data = json.load(json_file)
+
+#         # Print loaded data for debugging
+#         print("Loaded data:", groups_data)
+
+#         # Render the template and pass the data
+#         return render_template("group.html", groups=groups_data["groups"])
+
+#     except Exception as e:
+#         # Print any exception for debugging
+#         print("Error:", str(e))
+#         return "An error occurred."
+
 @app.route("/group")
 def group():
     try:
-        # Load group data from the JSON file (replace with your actual file path)
-        with open("../group.json", "r") as json_file:
-            groups_data = json.load(json_file)
+        server_url = "http://127.0.0.1:3000/display-user-groups"
+        payload = {'userEmail': 'user1@gmail.com'}
+        headers = {'Content-Type': 'application/json'}
 
-        # Print loaded data for debugging
-        print("Loaded data:", groups_data)
+        print(f'Sending request to {server_url} with payload: {payload}')
+        response = requests.post(server_url, json=payload, headers=headers)
+        response.raise_for_status()
 
-        # Render the template and pass the data
+        groups_data = response.json()
+        print(f'Received response: {groups_data}')
+
         return render_template("group.html", groups=groups_data["groups"])
-
+    except requests.HTTPError as http_err:
+        print(f"HTTP error occurred: {http_err}")
+        return f"HTTP error occurred: {http_err}", 500
     except Exception as e:
-        # Print any exception for debugging
+        print(f"An error occurred: {str(e)}")
+        return f"An error occurred: {str(e)}", 500
+
+
+    except requests.HTTPError as http_err:
+        # If there is an HTTPError, return the error message
+        return f"HTTP error occurred: {http_err}", 500
+    except Exception as e:
+        # For other exceptions, print and return the error message
         print("Error:", str(e))
-        return "An error occurred."
+        return f"An error occurred: {str(e)}", 500
 
 @app.route("/group-info")
 def group_info():
     group_name = request.args.get('group_name')
+    group_id = request.args.get('group_id')
     try:
-        # Load user info data from the JSON file (replace with your actual file path)
-        with open("../group_info.json", "r") as json_file:
-            group_info_data = json.load(json_file)
+        # Define the server URLs
+        members_url = "http://127.0.0.1:3000/display-group-members"
+        votes_url = "http://127.0.0.1:3000/display-top-votes"
 
-        # Print loaded data for debugging
-        print("Loaded data:", group_info_data)
+        # Set the payload to include group_id or group_name depending on your API
+        payload_members = {'groupId': group_id}
+        payload_votes = {'groupId': group_id}
+        headers = {'Content-Type': 'application/json'}
+
+        # Make requests to the server
+        response_members = requests.post(members_url, json=payload_members, headers=headers)
+        response_votes = requests.post(votes_url, json=payload_votes, headers=headers)
+
+        # Raise an exception if there was an error with the request
+        response_members.raise_for_status()
+        response_votes.raise_for_status()
+
+        # Extract the data from the responses
+        members_data = response_members.json()
+        votes_data = response_votes.json()
+
+        print("Members data received:", members_data)
+        print("Votes data received:", votes_data)
 
         # Render the template and pass the data
-        return render_template("group_info.html",group_name=group_name ,user_info=group_info_data)
+        return render_template("group_info.html", group_name=group_name, group_id=group_id, members_info=members_data, votes_info=votes_data)
 
+    except requests.HTTPError as http_err:
+        # If there is an HTTPError, return the error message
+        print("HTTP error occurred:", http_err)
+        return f"HTTP error occurred: {http_err}", 500
     except Exception as e:
-        # Print any exception for debugging
+        # For other exceptions, print and return the error message
         print("Error:", str(e))
-        return "An error occurred."
+        return f"An error occurred: {str(e)}", 500
 
-        
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
