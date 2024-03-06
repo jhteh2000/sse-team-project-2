@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/header.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/group.css') }}">
+    <link rel="stylesheet" href="../static/css/header.css">
+    <link rel="stylesheet" href="../static/css/group.css">
 </head>
+
 <body>
     <div class="header">
         <h1>{{ group_name }} - Group Information - ID {{ group_id }}</h1>
@@ -34,19 +35,14 @@
                 <td>{{ member.email }}</td>
                 <td>{{ member.first_name }}</td>
                 <td>{{ member.last_name }}</td>
-                <td>
-                    {% if member.status == 2 %}
-                    Creator
-                    {% elif member.status == 1 %}
-                    Accepted
-                    {% elif member.status == 0 %}
-                    Pending
-                    {% endif %}
-                </td>
+                <td>{{ member.status|default('N/A', true) }}</td>
             </tr>
             {% endfor %}
         </table>
-        <h2>Top Voted Dishes</h2>
+        <div class="top-voted-header">
+            <h2>Top Voted Dishes</h2>
+            <a href="{{ url_for('vote') }}" class="link-to-vote-btn">Vote for Dishes</a>
+        </div>
         <table id="topVotes">
             <tr>
                 <th>Rank</th>
@@ -61,4 +57,12 @@
         </table>
     </div>
 </body>
+<style>
+    body {
+        background-image: url('https://img.freepik.com/premium-photo/abstract-dark-wooden-background-vintage-tone-style_84485-386.jpg');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+    }
+</style> 
 </html>

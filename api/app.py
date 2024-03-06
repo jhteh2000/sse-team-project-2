@@ -69,28 +69,8 @@ def foodSearchResults():
 
     return render_template("results.html", result_args=data)
 
-
-# @app.route("/group")
-# def group():
-#     try:
-#         # Load group data from the JSON file (replace with your actual file path)
-#         with open("group.json", "r") as json_file:
-#             groups_data = json.load(json_file)
-
-#         # Print loaded data for debugging
-#         print("Loaded data:", groups_data)
-
-#         # Render the template and pass the data
-#         return render_template("user_groups.html", groups=groups_data["groups"])
-
-#     except Exception as e:
-#         # Print any exception for debugging
-#         print("Error:", str(e))
-#         return "An error occurred."
-
-@app.route("/group")
-@login_required
-def group():
+@app.route("/user-groups")
+def user_groups():
     try:
         server_url = "http://127.0.0.1:3000/display-user-groups"
         payload = {'userEmail': current_user.email}
@@ -225,7 +205,6 @@ def logout():
     logout_user()
     return redirect(url_for("index"))
 
-
 @app.route("/add_selected_food", methods=['POST'])
 @login_required
 def add_selected_food():
@@ -247,3 +226,7 @@ def remove_selected_food():
         return jsonify({'message': 'Food item removed successfully'})
     except Exception as e:
         return jsonify({'error': 'Failed to remove food item'}), 500
+
+@app.route("/vote")
+def vote():
+    return render_template("vote.html")

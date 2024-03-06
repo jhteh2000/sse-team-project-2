@@ -261,9 +261,40 @@ th:nth-child(3) {
 }
 
 .table-title {
-    color: #000000; /* Adjust the color as needed */
-    font-size: 30px; /* Adjust the font size as needed */
-    margin-bottom: 10px; /* Add some bottom margin for spacing */
-    text-decoration: underline; /* Add underline */
-    /* Add any additional styling properties here */
+    color: #000000;
+    font-size: 30px;
+    margin-bottom: 10px;
+    text-decoration: underline;
+}
+
+.top-voted-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.top-voted-header h2 {
+    margin-bottom: 0; /* Ensure the text is aligned with the button */
+}
+
+.link-to-vote-btn {
+    background-color: #805ad5;
+    color: white;
+    padding: 5px 15px; /* Reduced padding */
+    font-size: 0.9em; /* Reduced font size */
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 4px; /* Slightly smaller border-radius */
+    transition: background-color 0.3s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: inline-block;
+    white-space: nowrap;
+}
+
+.link-to-vote-btn:hover {
+    background-color: #6b46c1;
+    cursor: pointer;
 }

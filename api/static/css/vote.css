@@ -1,0 +1,202 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    background-color: #f4f4f4;
+    margin: 0; 
+    padding: 20px;
+    height: auto;
+}
+
+h1 {
+    width: 100%; 
+    text-align: center; 
+    color: #333;
+    margin: 20px 0;
+}
+
+.food-list-header {
+    font-size: 2em;
+    color: #f4f4f4;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.food-box {
+    position: relative; /* Set the position to relative for absolute positioning inside */
+    width: 25%; 
+    max-width: 300px; 
+    box-sizing: border-box;
+    margin: 10px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    height: 480px;
+}
+
+.no-results-text {
+    color: #d6dad6;
+    font-size: 2em;
+}
+
+.no-results-text {
+    color: #d6dad6;
+    font-size: 2em;
+}
+
+.no-results-text {
+    color: #d6dad6;
+    font-size: 2em;
+}
+
+/* Add this to your existing CSS file or create a new one, e.g., profile-button.css */
+
+.my-profile-button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #3498db; /* Button background color */
+  color: #fff; /* Button text color */
+  text-decoration: none;
+  border-radius: 5px; /* Optional: Adds rounded corners */
+  transition: background-color 0.3s ease; /* Smooth transition for background color */
+
+  /* Optional: Add hover effect */
+  &:hover {
+    background-color: #2980b9; /* Hover background color */
+  }
+
+  /* Additional styling for positioning at the top right */
+  position: absolute;
+  top: 10px; /* Adjust as needed */
+  right: 10px; /* Adjust as needed */
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+.favorite-btn {
+    position: absolute; /* Set the position to absolute for precise placement */
+    top: 10px; /* Adjust the distance from the top */
+    right: 10px; /* Adjust the distance from the right */
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.favorite-btn::before {
+    content: '\2665';
+    font-size: 24px;
+    color: rgb(214, 205, 205);
+}
+
+.favorite-btn:hover::before {
+    content: '\2665';
+    color: #ff0000;
+}
+
+.favorite-btn.active::before {
+    color: #ff0000; /* Set the color to red for the active state */
+}
+
+#hoverWindow {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 20px;
+    z-index: 1000;
+    display: none;
+}
+  
+#hoverWindow p {
+    margin: 0;
+}
+
+#contentContainer > button {
+    background-color: #4CAF50; /* Use a different color for better visibility */
+    color: #fff;
+    padding: 10px 20px; /* Increased padding for a more comfortable click/tap */
+    border: 2px solid #4CAF50; /* Add a border for a cleaner look */
+    border-radius: 5px; /* Rounded corners for a modern feel */
+    cursor: pointer;
+    display: block;
+    margin: 0 auto; /* Center-align the button using margin */
+    font-size: 16px; /* Adjust font size for better readability */
+    transition: background-color 0.3s, color 0.3s; /* Add a smooth transition effect */
+}
+
+#contentContainer > button:hover {
+    background-color: #45a049; /* Darker shade on hover for a subtle interaction effect */
+    color: #fff;
+}
+
+#closeWindowBtn {
+    position: inherit;
+    right: 10px;
+    top: 10px;
+    width: 20px;
+    height: 20px;
+    opacity: 0.3;
+}
+
+#closeWindowBtn:hover {
+    opacity: 1;
+}
+
+#closeWindowBtn:before, #closeWindowBtn:after {
+    position: absolute;
+    left: 10px;
+    content: ' ';
+    height: 20px;
+    width: 2px;
+    background-color: #333;
+}
+
+#closeWindowBtn:before {
+    transform: rotate(45deg);
+}
+
+#closeWindowBtn:after {
+    transform: rotate(-45deg);
+}
+
+
+/* Return button */
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 10px;
+    background-color: rgb(24, 15, 161); /* Green background */
+    color: white; /* White text */
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: #a04598; /* Darker green background on hover */
+}
+
+.button-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(105, 127, 141, 0.8); /* or any color you prefer */
+    text-align: center;
+    padding: 10px 0;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+}
