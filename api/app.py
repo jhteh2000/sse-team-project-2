@@ -81,7 +81,7 @@ def foodSearchResults():
 #         print("Loaded data:", groups_data)
 
 #         # Render the template and pass the data
-#         return render_template("group.html", groups=groups_data["groups"])
+#         return render_template("user_groups.html", groups=groups_data["groups"])
 
 #     except Exception as e:
 #         # Print any exception for debugging
@@ -102,7 +102,7 @@ def group():
         groups_data = response.json()
         print(f'Received response: {groups_data}')
 
-        return render_template("group.html", groups=groups_data["groups"])
+        return render_template("user_groups.html", groups=groups_data["groups"])
     except requests.HTTPError as http_err:
         print(f"HTTP error occurred: {http_err}")
         return f"HTTP error occurred: {http_err}", 500
