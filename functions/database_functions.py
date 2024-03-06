@@ -28,11 +28,6 @@ def insert_user_info(new_user_info):
     """
     data, count = supabase_client.table("User Registration").insert(new_user_info).execute()
 
-def fetch_user_favorites(email):
-    data, count = supabase_client.table("User Favorites").select("*").eq("email", email).execute()
-
-    return data[1]
-
 def insert_user_favorites(email, uri):
     favorite_data = {"email": email, "dish_uri": uri}
     data, count = supabase_client.table("User Favorites").insert(favorite_data).execute()

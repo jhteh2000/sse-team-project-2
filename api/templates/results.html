@@ -27,9 +27,9 @@
 
     {% if current_user.is_authenticated %}
       {% if result_args['uri'][i] in favorites %}
-        <button class="favorite-btn active" data-food-id="{{ i }}"></button>
+        <button class="favorite-btn active"></button>
       {% else %}
-        <button class="favorite-btn" data-food-id="{{ i }}"></button>
+        <button class="favorite-btn"></button>
       {% endif %}
     {% endif %}
     <br><br>

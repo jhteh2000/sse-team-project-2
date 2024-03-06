@@ -215,8 +215,12 @@ def register():
 @app.route("/profile")
 @login_required
 def profile():
-    favorites_placeholder = {"count": 0}
-    return render_template("profile.html", favorites=favorites_placeholder)
+    response = requests.post("http://127.0.0.1:4000/favourites", data={"user": current_user.email})
+    
+    if response.status_code == 200:
+        data = response.json()
+    
+    return render_template("profile.html", favorites=data)
 
 
 @app.route("/logout")

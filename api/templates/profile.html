@@ -15,17 +15,17 @@
     
         <h2>My Favorites</h2>
 
-	{% if favorites["count"] > 0 %}
+	{% if favorites|count > 0 %}
         <div class="favorites-grid">
-        {% for i in range(favorites["count"]) %}
-        <div class="food-box" data-uri='{{ favorites["uri"][i] | tojson }}' data-ingredientlist='{{ favorites["ingredient"][i] | tojson }}' data-recipeurl='{{ favorites["recipeURL"][i] | tojson }}'>
-            <img src="{{ favorites['image'][i] }}" alt="{{ favorites['name'][i] }}">
-            <h3>{{ favorites['name'][i] }}</h3>
+        {% for fav in favorites %}
+        <div class="food-box" data-uri='{{ fav["uri"] | tojson }}' data-ingredientlist='{{ fav["ingredient"] | tojson }}' data-recipeurl='{{ fav["recipeURL"] | tojson }}'>
+            <img src="{{ fav['image'] }}" alt="{{ fav['name'] }}">
+            <h3>{{ fav['name'] }}</h3>
             <div class="details">
-                <p>Calories: {{ favorites['calories'][i] }} kcal</p>
-                <p>Protein: {{ favorites['protein'][i] }} g</p>
+                <p>Calories: {{ fav['calories'] }} kcal</p>
+                <p>Protein: {{ fav['protein'] }} g</p>
             </div>
-            <button class="favorite-btn active" data-food-id="{{ i }}">  </button>
+            <button class="favorite-btn active"></button>
         </div>
         {% endfor %}
         <br><br>
