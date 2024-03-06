@@ -110,15 +110,6 @@ def group():
         print(f"An error occurred: {str(e)}")
         return f"An error occurred: {str(e)}", 500
 
-
-    except requests.HTTPError as http_err:
-        # If there is an HTTPError, return the error message
-        return f"HTTP error occurred: {http_err}", 500
-    except Exception as e:
-        # For other exceptions, print and return the error message
-        print("Error:", str(e))
-        return f"An error occurred: {str(e)}", 500
-
 @app.route("/group-info")
 def group_info():
     group_name = request.args.get('group_name')
