@@ -196,6 +196,7 @@ def register():
 @login_required
 def profile():
     response = requests.post("http://127.0.0.1:4000/favourites", data={"user": current_user.email})
+    data = []
     
     if response.status_code == 200:
         data = response.json()
