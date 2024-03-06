@@ -40,8 +40,8 @@ def index():
 
 
 # Food finder page
-@app.route("/food")
-def food():
+@app.route("/foodfinder")
+def foodfinder():
     return render_template("foodfinder.html")
 
 
@@ -69,31 +69,12 @@ def foodSearchResults():
 
     return render_template("results.html", result_args=data)
 
-
-# @app.route("/group")
-# def group():
-#     try:
-#         # Load group data from the JSON file (replace with your actual file path)
-#         with open("group.json", "r") as json_file:
-#             groups_data = json.load(json_file)
-
-#         # Print loaded data for debugging
-#         print("Loaded data:", groups_data)
-
-#         # Render the template and pass the data
-#         return render_template("user_groups.html", groups=groups_data["groups"])
-
-#     except Exception as e:
-#         # Print any exception for debugging
-#         print("Error:", str(e))
-#         return "An error occurred."
-
-@app.route("/group")
-@login_required
-def group():
+@app.route("/user-groups")
+def user_groups():
+    user_email = 'user1@gmail.com' # Need to change to current_user.email in production
     try:
         server_url = "http://127.0.0.1:3000/display-user-groups"
-        payload = {'userEmail': current_user.email}
+        payload = {'userEmail': user_email}
         headers = {'Content-Type': 'application/json'}
 
         print(f'Sending request to {server_url} with payload: {payload}')
@@ -103,7 +84,7 @@ def group():
         groups_data = response.json()
         print(f'Received response: {groups_data}')
 
-        return render_template("user_groups.html", groups=groups_data)
+        return render_template("user_groups.html", groups=groups_data, userEmail=user_email)
     except requests.HTTPError as http_err:
         print(f"HTTP error occurred: {http_err}")
         return f"HTTP error occurred: {http_err}", 500
@@ -112,7 +93,6 @@ def group():
         return f"An error occurred: {str(e)}", 500
 
 @app.route("/group-info")
-@login_required
 def group_info():
     group_name = request.args.get('group_name')
     group_id = request.args.get('group_id')
@@ -229,7 +209,6 @@ def logout():
     logout_user()
     return redirect(url_for("index"))
 
-
 @app.route("/add_selected_food", methods=['POST'])
 @login_required
 def add_selected_food():
@@ -251,3 +230,7 @@ def remove_selected_food():
         return jsonify({'message': 'Food item removed successfully'})
     except Exception as e:
         return jsonify({'error': 'Failed to remove food item'}), 500
+
+@app.route("/vote")
+def vote():
+    return render_template("vote.html")

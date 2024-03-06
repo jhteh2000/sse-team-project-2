@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/header.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/group.css') }}">
+    <link rel="stylesheet" href="../static/css/header.css">
+    <link rel="stylesheet" href="../static/css/group_info.css">
 </head>
+
 <body>
     <div class="header">
-        <h1>{{ group_name }} - Group Information - ID {{ group_id }}</h1>
+        <h1>{{ group_name }} <span class="group-id">#{{ group_id }}</span></h1>
         <div class="auth-links">
             {% if not current_user.is_authenticated %}
             <a href="{{ url_for('login') }}">Login</a>
@@ -24,29 +25,32 @@
         <h2>Group Members</h2>
         <table id="members">
             <tr>
+                <th>Name</th>
                 <th>Email</th>
-                <th>First Name</th>
-                <th>Last Name</th>
                 <th>Status</th>
             </tr>
             {% for member in members_info %}
             <tr>
+                <td>{{ member.first_name }} {{ member.last_name }}</td>
                 <td>{{ member.email }}</td>
-                <td>{{ member.first_name }}</td>
-                <td>{{ member.last_name }}</td>
                 <td>
                     {% if member.status == 2 %}
-                    Creator
+                        Owner
                     {% elif member.status == 1 %}
-                    Accepted
+                        Member
                     {% elif member.status == 0 %}
-                    Pending
+                        Pending Invitation
+                    {% else %}
+                        Unknown Status
                     {% endif %}
                 </td>
             </tr>
             {% endfor %}
         </table>
-        <h2>Top Voted Dishes</h2>
+        <div class="top-voted-header">
+            <h2>Top Voted Dishes</h2>
+            <a href="{{ url_for('vote') }}" class="link-to-vote-btn">Vote for Dishes</a>
+        </div>
         <table id="topVotes">
             <tr>
                 <th>Rank</th>
@@ -61,4 +65,12 @@
         </table>
     </div>
 </body>
+<style>
+    body {
+        background-image: url('https://img.freepik.com/premium-photo/abstract-dark-wooden-background-vintage-tone-style_84485-386.jpg');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+    }
+</style> 
 </html>
