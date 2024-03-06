@@ -74,7 +74,6 @@ def user_groups():
     user_email = 'user1@gmail.com' # Need to change to current_user.email in production
     try:
         server_url = "http://127.0.0.1:3000/display-user-groups"
-        #payload = {'userEmail': current_user.email}
         payload = {'userEmail': user_email}
         headers = {'Content-Type': 'application/json'}
 
@@ -94,7 +93,6 @@ def user_groups():
         return f"An error occurred: {str(e)}", 500
 
 @app.route("/group-info")
-@login_required
 def group_info():
     group_name = request.args.get('group_name')
     group_id = request.args.get('group_id')

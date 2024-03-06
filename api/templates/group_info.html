@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../static/css/header.css">
-    <link rel="stylesheet" href="../static/css/group.css">
+    <link rel="stylesheet" href="../static/css/group_info.css">
 </head>
 
 <body>
     <div class="header">
-        <h1>{{ group_name }} - Group Information - ID {{ group_id }}</h1>
+        <h1>{{ group_name }}</h1>
         <div class="auth-links">
             {% if not current_user.is_authenticated %}
             <a href="{{ url_for('login') }}">Login</a>
@@ -25,17 +25,25 @@
         <h2>Group Members</h2>
         <table id="members">
             <tr>
+                <th>Name</th>
                 <th>Email</th>
-                <th>First Name</th>
-                <th>Last Name</th>
                 <th>Status</th>
             </tr>
             {% for member in members_info %}
             <tr>
+                <td>{{ member.first_name }} {{ member.last_name }}</td>
                 <td>{{ member.email }}</td>
-                <td>{{ member.first_name }}</td>
-                <td>{{ member.last_name }}</td>
-                <td>{{ member.status|default('N/A', true) }}</td>
+                <td>
+                    {% if member.status == 2 %}
+                        Owner
+                    {% elif member.status == 1 %}
+                        Pending Invitation
+                    {% elif member.status == 0 %}
+                        Member
+                    {% else %}
+                        Unknown Status
+                    {% endif %}
+                </td>
             </tr>
             {% endfor %}
         </table>
