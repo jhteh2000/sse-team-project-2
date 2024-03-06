@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for, request
+from flask import Flask, render_template, redirect, url_for, request, jsonify
 from dotenv import load_dotenv
 import os
 from flask_login import (
@@ -15,7 +15,7 @@ from functions.userclass import User
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import timedelta
 from postgrest.exceptions import APIError
-from functions.database_functions import insert_user_info
+from functions.database_functions import insert_user_info, insert_user_favorites, delete_user_favorites
 
 load_dotenv()
 
@@ -89,10 +89,11 @@ def foodSearchResults():
 #         return "An error occurred."
 
 @app.route("/group")
+@login_required
 def group():
     try:
         server_url = "http://127.0.0.1:3000/display-user-groups"
-        payload = {'userEmail': 'user1@gmail.com'}
+        payload = {'userEmail': current_user.email}
         headers = {'Content-Type': 'application/json'}
 
         print(f'Sending request to {server_url} with payload: {payload}')
@@ -111,6 +112,7 @@ def group():
         return f"An error occurred: {str(e)}", 500
 
 @app.route("/group-info")
+@login_required
 def group_info():
     group_name = request.args.get('group_name')
     group_id = request.args.get('group_id')
@@ -222,3 +224,26 @@ def profile():
 def logout():
     logout_user()
     return redirect(url_for("index"))
+
+
+@app.route("/add_selected_food", methods=['POST'])
+@login_required
+def add_selected_food():
+    try:
+        data = request.get_json()
+        insert_user_favorites(current_user.email, data["uri"])
+
+        return jsonify({'message': 'Food item added successfully'})
+    except Exception as e:
+        return jsonify({'error': 'Failed to add food item'}), 500
+
+@app.route("/remove_selected_food", methods=['POST'])
+@login_required
+def remove_selected_food():
+    try:
+        data = request.get_json()
+        delete_user_favorites(current_user.email, data["uri"])
+
+        return jsonify({'message': 'Food item removed successfully'})
+    except Exception as e:
+        return jsonify({'error': 'Failed to remove food item'}), 500
