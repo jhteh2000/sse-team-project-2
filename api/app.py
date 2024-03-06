@@ -40,8 +40,8 @@ def index():
 
 
 # Food finder page
-@app.route("/food")
-def food():
+@app.route("/foodfinder")
+def foodfinder():
     return render_template("foodfinder.html")
 
 
