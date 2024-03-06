@@ -56,6 +56,11 @@ def submit():
     args["cuisine"] = request.form.getlist("cuisine")
     args["dish"] = request.form.getlist("dish")
 
+    if current_user.is_authenticated:
+        args["user"] = current_user.email
+    else:
+        args["user"] = None
+
     response = requests.post("http://127.0.0.1:4000", json=args)
 
     if response.status_code == 200:
@@ -67,7 +72,7 @@ def submit():
 def foodSearchResults():
     data = json.loads(request.args.get("data"))
 
-    return render_template("results.html", results=data)
+    return render_template("results.html", results=data[0], favorites=data[1])
 
 @app.route("/user-groups")
 def user_groups():
