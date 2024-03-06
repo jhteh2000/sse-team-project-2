@@ -169,22 +169,22 @@ td:last-child {
     padding-right: 24px;
 }
   
-/* First Column (Group Name) - 40% */
+/* First Column (Group Name) - 20% */
 td:nth-child(1),
 th:nth-child(1) {
+    width: 20%;
+}
+
+/* Second Column (Group ID) - 40% */
+td:nth-child(2),
+th:nth-child(2) {
     width: 40%;
 }
 
-/* Second Column (Group ID) - 30% */
-td:nth-child(2),
-th:nth-child(2) {
-    width: 30%;
-}
-
-/* Third Column (Action) - 30% */
+/* Third Column (Action) - 40% */
 td:nth-child(3),
 th:nth-child(3) {
-    width: 30%;
+    width: 40%;
 }
   
 /* Button Styles */

@@ -9,7 +9,7 @@
 
 <body>
     <div class="header">
-        <h1>{{ group_name }}</h1>
+        <h1>{{ group_name }} <span class="group-id">#{{ group_id }}</span></h1>
         <div class="auth-links">
             {% if not current_user.is_authenticated %}
             <a href="{{ url_for('login') }}">Login</a>
@@ -37,9 +37,9 @@
                     {% if member.status == 2 %}
                         Owner
                     {% elif member.status == 1 %}
-                        Pending Invitation
-                    {% elif member.status == 0 %}
                         Member
+                    {% elif member.status == 0 %}
+                        Pending Invitation
                     {% else %}
                         Unknown Status
                     {% endif %}

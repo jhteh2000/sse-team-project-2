@@ -28,16 +28,16 @@
 
         <h2>Pending Invitations</h2>
         <table id="pending">
-            <tr>  
-                <th>Group Name</th>
+            <tr>
                 <th>Group ID</th>
+                <th>Group Name</th>
                 <th>Action</th>
             </tr>
             {% for i in range(groups|count) %}
                 {% if groups[i]["status"] == 0 %}
                 <tr>
-                    <td><a href="{{ url_for('group_info', group_name=groups[i]['group_name'], group_id=groups[i]['group_id']) }}">{{ groups[i]["group_name"] }}</a></td>
                     <td>{{ groups[i]["group_id"] }}</td>
+                    <td><a href="{{ url_for('group_info', group_name=groups[i]['group_name'], group_id=groups[i]['group_id']) }}">{{ groups[i]["group_name"] }}</a></td>
                     <td class="button-cell">
                         <button class="accept-btn" data-group-id="{{ groups[i]['group_id'] }}" data-user-email="{{ userEmail }}">Accept</button>
                         <button class="decline-btn" data-group-id="{{ groups[i]['group_id'] }}" data-user-email="{{ userEmail }}">Decline</button>
@@ -51,15 +51,15 @@
         <h2>My Groups</h2>
         <table id="joined">
             <tr>
-                <th>Group Name</th>
                 <th>Group ID</th>
-                <th>Action</th>
+                <th>Group Name</th>
+                <th>Description</th>
             </tr>
             {% for i in range(groups|count) %}
                 {% if groups[i]["status"] != 0 %}
                 <tr>
-                    <td><a href="{{ url_for('group_info', group_name=groups[i]['group_name'], group_id=groups[i]['group_id']) }}">{{ groups[i]["group_name"] }}</a></td>
                     <td>{{ groups[i]["group_id"] }}</td>
+                    <td><a href="{{ url_for('group_info', group_name=groups[i]['group_name'], group_id=groups[i]['group_id']) }}">{{ groups[i]["group_name"] }}</a></td>
                     <td class="button-cell">
                         <button class="view-description-btn" onclick="openDescriptionModal('openDescription', {{ groups[i] }})">Description</button>
                     </td> 
