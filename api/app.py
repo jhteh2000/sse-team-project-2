@@ -42,7 +42,7 @@ def index():
 # Food finder page
 @app.route("/food")
 def food():
-    return render_template("food.html")
+    return render_template("foodfinder.html")
 
 
 # The form submitted in the food page will go to this route

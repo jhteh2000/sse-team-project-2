@@ -35,7 +35,7 @@ function submitGroup() {
 
     console.log('JSON data sent:', jsonData);
 
-    fetch('http://local/submit-group', {
+    fetch('http://127.0.0.1:3000/create-group', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
