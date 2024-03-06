@@ -169,19 +169,19 @@ td:last-child {
     padding-right: 24px;
 }
   
-/* First Column (10%) */
+/* First Column (Group Name) - 40% */
 td:nth-child(1),
 th:nth-child(1) {
-    width: 10%;
+    width: 40%;
 }
-  
-/* Second Column (70%) */
+
+/* Second Column (Group ID) - 30% */
 td:nth-child(2),
 th:nth-child(2) {
-    width: 60%;
+    width: 30%;
 }
-  
-/* Third Column (20%) */
+
+/* Third Column (Action) - 30% */
 td:nth-child(3),
 th:nth-child(3) {
     width: 30%;

@@ -50,12 +50,12 @@ function submitGroup() {
     })
     .then(data => {
         console.log('Server response:', data);
+        closeModal(); // Close the modal first before reloading
+        window.location.reload(); // Reload the page to reflect changes
     })
     .catch(error => {
         console.error('Error:', error);
     });
-
-    closeModal();
 }
 
 
@@ -88,7 +88,7 @@ function logout() {
     alert("Logout functionality will be implemented here.");
     // Add logout functionality here
 }
-
+/*
 // Function to handle accepting or declining an invitation
 function handleInvitation(button, action) {
     // Get the table row
@@ -117,6 +117,7 @@ function handleInvitation(button, action) {
         sortTableByDate(joinedTable);
     }
 }
+*/
 
 // Function to retrieve the event date based on the group name
 function getEventDate(groupName) {
@@ -144,7 +145,7 @@ function sortTableByDate(table) {
         table.appendChild(row);
     });
 }
-
+/*
 // Attach event listeners to the accept buttons
 var acceptButtons = document.getElementsByClassName("accept-btn");
 for (var i = 0; i < acceptButtons.length; i++) {
@@ -158,5 +159,55 @@ var declineButtons = document.getElementsByClassName("decline-btn");
 for (var i = 0; i < declineButtons.length; i++) {
     declineButtons[i].addEventListener("click", function() {
         handleInvitation(this, 'decline');
+    });
+}
+*/
+
+function handleInvitationResponse(groupId, userEmail, action) {
+    // Determine the correct URL based on the action
+    var url = action === 'accept' 
+        ? 'http://127.0.0.1:3000/accept-group' 
+        : 'http://127.0.0.1:3000/decline-group';
+
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ group_id: groupId, email: userEmail }),
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log(`${action} response:`, data);
+        // Reload the page to reflect changes
+        window.location.reload();
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+// Attach event listeners to the accept buttons
+var acceptButtons = document.getElementsByClassName("accept-btn");
+for (var i = 0; i < acceptButtons.length; i++) {
+    acceptButtons[i].addEventListener("click", function() {
+        var groupId = this.getAttribute('data-group-id');
+        var userEmail = this.getAttribute('data-user-email');
+        handleInvitationResponse(groupId, userEmail, 'accept');
+    });
+}
+
+// Attach event listeners to the decline buttons
+var declineButtons = document.getElementsByClassName("decline-btn");
+for (var i = 0; i < declineButtons.length; i++) {
+    declineButtons[i].addEventListener("click", function() {
+        var groupId = this.getAttribute('data-group-id');
+        var userEmail = this.getAttribute('data-user-email');
+        handleInvitationResponse(groupId, userEmail, 'decline');
     });
 }

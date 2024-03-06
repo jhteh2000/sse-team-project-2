@@ -28,8 +28,7 @@
 
         <h2>Pending Invitations</h2>
         <table id="pending">
-            <tr>
-                <th>No</th>
+            <tr>  
                 <th>Group Name</th>
                 <th>Group ID</th>
                 <th>Action</th>
@@ -37,12 +36,11 @@
             {% for i in range(groups|count) %}
                 {% if groups[i]["status"] == 0 %}
                 <tr>
-                    <td>{{ i+1 }}</td>
                     <td><a href="{{ url_for('group_info', group_name=groups[i]['group_name'], group_id=groups[i]['group_id']) }}">{{ groups[i]["group_name"] }}</a></td>
                     <td>{{ groups[i]["group_id"] }}</td>
                     <td class="button-cell">
-                        <button class="accept-btn">Accept</button>
-                        <button class="decline-btn">Decline</button>
+                        <button class="accept-btn" data-group-id="{{ groups[i]['group_id'] }}" data-user-email="{{ userEmail }}">Accept</button>
+                        <button class="decline-btn" data-group-id="{{ groups[i]['group_id'] }}" data-user-email="{{ userEmail }}">Decline</button>
                         <button class="view-description-btn" onclick="openDescriptionModal('openDescription', {{ groups[i] }})">Description</button>
                     </td>                   
                 </tr>
@@ -53,7 +51,6 @@
         <h2>Upcoming Parties</h2>
         <table id="joined">
             <tr>
-                <th>No</th>
                 <th>Group Name</th>
                 <th>Group ID</th>
                 <th>Action</th>
@@ -61,7 +58,6 @@
             {% for i in range(groups|count) %}
                 {% if groups[i]["status"] != 0 %}
                 <tr>
-                    <td>{{ i+1 }}</td>
                     <td><a href="{{ url_for('group_info', group_name=groups[i]['group_name'], group_id=groups[i]['group_id']) }}">{{ groups[i]["group_name"] }}</a></td>
                     <td>{{ groups[i]["group_id"] }}</td>
                     <td class="button-cell">

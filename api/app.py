@@ -90,9 +90,10 @@ def foodSearchResults():
 
 @app.route("/group")
 def group():
+    user_email = 'user1@gmail.com' # Swap this with real username from login session
     try:
         server_url = "http://127.0.0.1:3000/display-user-groups"
-        payload = {'userEmail': 'user1@gmail.com'}
+        payload = {'userEmail': user_email}
         headers = {'Content-Type': 'application/json'}
 
         print(f'Sending request to {server_url} with payload: {payload}')
@@ -102,7 +103,7 @@ def group():
         groups_data = response.json()
         print(f'Received response: {groups_data}')
 
-        return render_template("user_groups.html", groups=groups_data)
+        return render_template("user_groups.html", groups=groups_data, userEmail=user_email)
     except requests.HTTPError as http_err:
         print(f"HTTP error occurred: {http_err}")
         return f"HTTP error occurred: {http_err}", 500
