@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for, request
+from flask import Flask, render_template, redirect, url_for, request, jsonify
 from dotenv import load_dotenv
 import os
 from flask_login import (
@@ -15,7 +15,7 @@ from functions.userclass import User
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import timedelta
 from postgrest.exceptions import APIError
-from functions.database_functions import insert_user_info
+from functions.database_functions import insert_user_info, insert_user_favorites, delete_user_favorites
 
 load_dotenv()
 
@@ -69,30 +69,12 @@ def foodSearchResults():
 
     return render_template("results.html", result_args=data)
 
-
-# @app.route("/group")
-# def group():
-#     try:
-#         # Load group data from the JSON file (replace with your actual file path)
-#         with open("group.json", "r") as json_file:
-#             groups_data = json.load(json_file)
-
-#         # Print loaded data for debugging
-#         print("Loaded data:", groups_data)
-
-#         # Render the template and pass the data
-#         return render_template("user_groups.html", groups=groups_data["groups"])
-
-#     except Exception as e:
-#         # Print any exception for debugging
-#         print("Error:", str(e))
-#         return "An error occurred."
-
-@app.route("/group")
-def group():
-    user_email = 'user1@gmail.com' # Swap this with real username from login session
+@app.route("/user-groups")
+def user_groups():
+    user_email = 'user1@gmail.com' # Need to change to current_user.email in production
     try:
         server_url = "http://127.0.0.1:3000/display-user-groups"
+        #payload = {'userEmail': current_user.email}
         payload = {'userEmail': user_email}
         headers = {'Content-Type': 'application/json'}
 
@@ -112,6 +94,7 @@ def group():
         return f"An error occurred: {str(e)}", 500
 
 @app.route("/group-info")
+@login_required
 def group_info():
     group_name = request.args.get('group_name')
     group_id = request.args.get('group_id')
@@ -223,3 +206,29 @@ def profile():
 def logout():
     logout_user()
     return redirect(url_for("index"))
+
+@app.route("/add_selected_food", methods=['POST'])
+@login_required
+def add_selected_food():
+    try:
+        data = request.get_json()
+        insert_user_favorites(current_user.email, data["uri"])
+
+        return jsonify({'message': 'Food item added successfully'})
+    except Exception as e:
+        return jsonify({'error': 'Failed to add food item'}), 500
+
+@app.route("/remove_selected_food", methods=['POST'])
+@login_required
+def remove_selected_food():
+    try:
+        data = request.get_json()
+        delete_user_favorites(current_user.email, data["uri"])
+
+        return jsonify({'message': 'Food item removed successfully'})
+    except Exception as e:
+        return jsonify({'error': 'Failed to remove food item'}), 500
+
+@app.route("/vote")
+def vote():
+    return render_template("vote.html")
