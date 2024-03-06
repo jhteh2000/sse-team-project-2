@@ -86,11 +86,12 @@
                 
                 <br><br>
                 
-                <label for="groupMembers">Group Members (semicolon-separated):</label>
+                <label for="groupMembers">Group Members (comma-separated):</label>
                 <br>
                 <input type="text" id="groupMembers" name="groupMembers" required>
                 
                 <br><br>
+                <input type="hidden" id="userEmail" name="userEmail" value="{{ userEmail }}">
                 
                 <button type="button" onclick="submitGroup()">Create Group</button>
             </form>

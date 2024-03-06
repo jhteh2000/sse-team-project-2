@@ -23,12 +23,24 @@ function closeModal() {
 function submitGroup() {
     var groupName = document.getElementById("groupName").value;
     var groupDetail = document.getElementById("groupDetail").value;
-    var groupMembers = document.getElementById("groupMembers").value.split(';');
+
+    // Retrieve the value of userEmail from the hidden input
+    var userEmail = document.getElementById('userEmail').value;
+    // Split the groupMembers string by ';' to create an array of emails
+    var groupMembers = document.getElementById("groupMembers").value.split(';').map(function(email) {
+        return email.trim(); // Trim whitespace from each email
+    });
+
+    // Prepend the userEmail to the groupMembers array
+    var memberList = [userEmail].concat(groupMembers);
+
+    console.log(memberList);
+
 
     var groupData = {
         groupName: groupName,
         groupDetail: groupDetail,
-        groupMembers: groupMembers
+        groupMembers: memberList
     };
 
     var jsonData = JSON.stringify(groupData);

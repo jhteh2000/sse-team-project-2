@@ -21,6 +21,7 @@ body {
 
 #userProfileContainer {
     max-width: 1000px; /* Or your preferred max width */
+    text-align: center;
     margin: auto; /* Center the container */
     padding: 20px;
     background-color: #f8f8f8; /* Light background for the container */

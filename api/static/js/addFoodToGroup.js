@@ -5,7 +5,7 @@ function addToGroup(){
     
     var foodData = {
         userEmail : userEmail,
-        dishUri : dishUri
+        dishUri : JSON.parse(dishUri)
     };
 
     var jsonData = JSON.stringify(foodData);
