@@ -102,7 +102,7 @@ def group():
         groups_data = response.json()
         print(f'Received response: {groups_data}')
 
-        return render_template("user_groups.html", groups=groups_data["groups"])
+        return render_template("user_groups.html", groups=groups_data)
     except requests.HTTPError as http_err:
         print(f"HTTP error occurred: {http_err}")
         return f"HTTP error occurred: {http_err}", 500

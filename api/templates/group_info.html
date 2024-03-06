@@ -29,7 +29,7 @@
                 <th>Last Name</th>
                 <th>Status</th>
             </tr>
-            {% for member in members_info.members %}
+            {% for member in members_info %}
             <tr>
                 <td>{{ member.email }}</td>
                 <td>{{ member.first_name }}</td>
@@ -52,7 +52,7 @@
                 <th>Rank</th>
                 <th>Dish URI</th>
             </tr>
-            {% for vote in votes_info.topDishes %}
+            {% for vote in votes_info %}
             <tr>
                 <td>{{ loop.index }}</td>
                 <td>{{ vote.dish_uri }}</td>
