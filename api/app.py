@@ -46,7 +46,7 @@ def foodfinder():
 
 
 # The form submitted in the food page will go to this route
-@app.route("/food/submit", methods=["POST"])
+@app.route("/foodfinder/submit", methods=["POST"])
 def submit():
     # Retrieve the form value and add into a dictionary
     args = {}
@@ -63,11 +63,11 @@ def submit():
 
 
 # Food finder search results page
-@app.route("/food/results")
+@app.route("/foodfinder/results")
 def foodSearchResults():
     data = json.loads(request.args.get("data"))
 
-    return render_template("results.html", result_args=data)
+    return render_template("results.html", results=data)
 
 @app.route("/user-groups")
 def user_groups():

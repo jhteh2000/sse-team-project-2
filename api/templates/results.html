@@ -16,17 +16,17 @@
   <a href="{{ url_for('login') }}" class="my-profile-button">Log In</a>
   {% endif %}
 
-  {% for i in range([20, result_args['count']]|min) %}
-  <div class="food-box" data-uri='{{ result_args["uri"][i] | tojson }}' data-ingredientlist='{{ result_args["ingredient"][i] | tojson }}' data-recipeurl='{{ result_args["recipeURL"][i] | tojson }}'>
-    <img src="{{ result_args['image'][i] }}" alt="Food Image">
-    <h3>{{ result_args['name'][i] }}</h3>
+  {% for result in results %}
+  <div class="food-box" data-uri='{{ result["uri"] | tojson }}' data-ingredientlist='{{ result["ingredient"] | tojson }}' data-recipeurl='{{ result["recipeURL"] | tojson }}'>
+    <img src="{{ result['image'] }}" alt="Food Image">
+    <h3>{{ result['name'] }}</h3>
     <div class="details">
-      <p>Calories: {{ result_args['calories'][i] }} kcal</p>
-      <p>Protein: {{ result_args['protein'][i] }} g</p>
+      <p>Calories: {{ result['calories'] }} kcal</p>
+      <p>Protein: {{ result['protein'] }} g</p>
     </div>
 
     {% if current_user.is_authenticated %}
-      {% if result_args['uri'][i] in favorites %}
+      {% if result['uri'] in favorites %}
         <button class="favorite-btn active"></button>
       {% else %}
         <button class="favorite-btn"></button>
