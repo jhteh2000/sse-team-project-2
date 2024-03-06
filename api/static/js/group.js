@@ -50,8 +50,8 @@ function submitGroup() {
     })
     .then(data => {
         console.log('Server response:', data);
-        closeModal(); // Close the modal first before reloading
-        window.location.reload(); // Reload the page to reflect changes
+        closeModal(); 
+        window.location.reload(); 
     })
     .catch(error => {
         console.error('Error:', error);

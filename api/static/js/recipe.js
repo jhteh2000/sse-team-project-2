@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
     foodBox.addEventListener('click', function () {
 	
 	// Check if the clicked element is the heart button
-	if (event.target.classList.contains('favorite-btn')) {
+	if (event.target.classList.contains('favorite-btn') || event.target.classList.contains('add-to-group-btn')) {
 		return;
 	}
 	
