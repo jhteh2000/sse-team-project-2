@@ -102,6 +102,7 @@ def group_info():
     group_name = request.args.get('group_name')
     group_id = request.args.get('group_id')
     user_email = request.args.get('user_email')
+    group_status = request.args.get('group_status')
     try:
         # Define the server URLs
         members_url = "http://127.0.0.1:3000/display-group-members"
@@ -126,9 +127,8 @@ def group_info():
 
         print("Members data received:", members_data)
         print("Votes data received:", votes_data)
-
         # Render the template and pass the data
-        return render_template("group_info.html", group_name=group_name, group_id=group_id, members_info=members_data, votes_info=votes_data, user_email=user_email)
+        return render_template("group_info.html", group_name=group_name, group_id=group_id, members_info=members_data, votes_info=votes_data, user_email=user_email, group_status=group_status)
 
     except requests.HTTPError as http_err:
         # If there is an HTTPError, return the error message
@@ -256,9 +256,6 @@ def vote():
             for dish in dishes_data:
                 dish_uri_list.append(dish["dish_uri"])
 
-            print(dish_uri_list)
-            print(dish_uri_list[0])
-            print(dish_uri_list[1])
             # Now, make a request to the Food Finder service for detailed dish information
             food_finder_service_url = 'http://127.0.0.1:4000/display-votes'
             food_finder_payload = {'dish_uri_list': dish_uri_list}
@@ -266,7 +263,10 @@ def vote():
 
             if food_finder_response.status_code == 200:
                 detailed_dishes = food_finder_response.json()
-                return render_template('voting.html', dishes=detailed_dishes, dishes_data=dishes_data, group_name=group_name, group_id=group_id, user_email=user_email)
+                vote_remain = 3
+                for dish in dishes_data:
+                    vote_remain -= dish["voted_by_user"]
+                return render_template('voting.html', dishes=detailed_dishes, dishes_data=dishes_data,vote_remain=vote_remain, group_name=group_name, group_id=group_id, user_email=user_email)
             else:
                 return 'Error retrieving detailed dishes information', 500
     else:

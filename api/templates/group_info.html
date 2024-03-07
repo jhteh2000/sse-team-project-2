@@ -49,7 +49,9 @@
         </table>
         <div class="top-voted-header">
             <h2>Top Voted Dishes</h2>
-            <a href="{{ url_for('vote', group_name=group_name, group_id=group_id, user_email=user_email) }}" class="link-to-vote-btn">Vote for Dishes</a>
+            {% if group_status != '0' %}
+                <a href="{{ url_for('vote', group_name=group_name, group_id=group_id, user_email=user_email) }}" class="link-to-vote-btn">Vote for Dishes</a>
+            {% endif %}
         </div>
         <table id="topVotes">
             <tr>

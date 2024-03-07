@@ -56,6 +56,10 @@
     <div id="userProfileContainer" class="container">
         <h1>{{ group_name }} as user {{ user_email }}</h1>
         <h2>Dish Voting</h2>
+        <h3>You have {{ vote_remain }} votes left</h3>
+        {% if vote_remain == 0 %}
+        <h4 style="color: red;">You cannot vote anymore!</h4>
+        {% endif %}
 
     {% if dishes|count > 0 %}
         <div class="favorites-grid">

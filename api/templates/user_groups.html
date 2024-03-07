@@ -37,7 +37,7 @@
                 {% if groups[i]["status"] == 0 %}
                 <tr>
                     <td>{{ groups[i]["group_id"] }}</td>
-                    <td><a href="{{ url_for('group_info', group_name=groups[i]['group_name'], group_id=groups[i]['group_id']) }}">{{ groups[i]["group_name"] }}</a></td>
+                    <td><a href="{{ url_for('group_info', group_name=groups[i]['group_name'], group_id=groups[i]['group_id'], group_status=groups[i]['status']) }}">{{ groups[i]["group_name"] }}</a></td>
                     <td class="button-cell">
                         <button class="accept-btn" data-group-id="{{ groups[i]['group_id'] }}" data-user-email="{{ userEmail }}">Accept</button>
                         <button class="decline-btn" data-group-id="{{ groups[i]['group_id'] }}" data-user-email="{{ userEmail }}">Decline</button>
@@ -59,7 +59,7 @@
                 {% if groups[i]["status"] != 0 %}
                 <tr>
                     <td>{{ groups[i]["group_id"] }}</td>
-                    <td><a href="{{ url_for('group_info', group_name=groups[i]['group_name'], group_id=groups[i]['group_id'], user_email=userEmail) }}">{{ groups[i]["group_name"] }}</a></td>
+                    <td><a href="{{ url_for('group_info', group_name=groups[i]['group_name'], group_id=groups[i]['group_id'], group_status=groups[i]['status']) }}">{{ groups[i]["group_name"] }}</a></td>
                     <td class="button-cell">
                         <button class="view-description-btn" onclick="openDescriptionModal('openDescription', {{ groups[i] }})">Description</button>
                         <button class="remove-group-btn" data-group-id="{{ groups[i]['group_id'] }}" data-user-email="{{ userEmail }}">Remove</button>
