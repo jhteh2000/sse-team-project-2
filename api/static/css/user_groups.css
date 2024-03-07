@@ -143,6 +143,7 @@ th {
   
 /* Table Row */
 tr {
+    text-align: center;
     background-color: #fff;
     transition: background-color 0.3s ease;
 }
@@ -214,6 +215,18 @@ th:nth-child(3) {
 }
 
 .view-description-btn {
+    padding: 6px 12px; /* Consistent padding */
+    font-size: 12px; /* Consistent font size */
+    border: none;
+    cursor: pointer;
+    border-radius: 4px; /* Consistent border-radius */
+    margin-left: 2px; /* Adjust spacing between buttons */
+    margin-right: 2px;
+}
+
+.remove-group-btn {
+    background-color: #840f06;
+    color: white;
     padding: 6px 12px; /* Consistent padding */
     font-size: 12px; /* Consistent font size */
     border: none;

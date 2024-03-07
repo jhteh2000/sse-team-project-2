@@ -157,29 +157,13 @@ function sortTableByDate(table) {
         table.appendChild(row);
     });
 }
-/*
-// Attach event listeners to the accept buttons
-var acceptButtons = document.getElementsByClassName("accept-btn");
-for (var i = 0; i < acceptButtons.length; i++) {
-    acceptButtons[i].addEventListener("click", function() {
-        handleInvitation(this, 'accept');
-    });
-}
-
-// Attach event listeners to the decline buttons
-var declineButtons = document.getElementsByClassName("decline-btn");
-for (var i = 0; i < declineButtons.length; i++) {
-    declineButtons[i].addEventListener("click", function() {
-        handleInvitation(this, 'decline');
-    });
-}
-*/
 
 function handleInvitationResponse(groupId, userEmail, action) {
     // Determine the correct URL based on the action
     var url = action === 'accept' 
         ? 'http://127.0.0.1:3000/accept-group' 
         : 'http://127.0.0.1:3000/decline-group';
+        console.log(url);
 
     fetch(url, {
         method: 'POST',
@@ -221,5 +205,43 @@ for (var i = 0; i < declineButtons.length; i++) {
         var groupId = this.getAttribute('data-group-id');
         var userEmail = this.getAttribute('data-user-email');
         handleInvitationResponse(groupId, userEmail, 'decline');
+    });
+}
+
+function handleRemoveGroupResponse(groupId, userEmail) {
+    console.log(groupId);
+    console.log(userEmail);
+    var url = 'http://127.0.0.1:3000/remove-group';
+
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ group_id: groupId, email: userEmail }),
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log(`response:`, data);
+        // Reload the page to reflect changes
+        window.location.reload();
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+// Attach event listeners to the remove-group buttons
+var removeGroupButtons = document.getElementsByClassName("remove-group-btn");
+for (var i = 0; i < removeGroupButtons.length; i++) {
+    removeGroupButtons[i].addEventListener("click", function() {
+        var groupId = this.getAttribute('data-group-id');
+        var userEmail = this.getAttribute('data-user-email');
+        handleRemoveGroupResponse(groupId, userEmail);
     });
 }
