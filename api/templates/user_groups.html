@@ -59,7 +59,7 @@
                 {% if groups[i]["status"] != 0 %}
                 <tr>
                     <td>{{ groups[i]["group_id"] }}</td>
-                    <td><a href="{{ url_for('group_info', group_name=groups[i]['group_name'], group_id=groups[i]['group_id']) }}">{{ groups[i]["group_name"] }}</a></td>
+                    <td><a href="{{ url_for('group_info', group_name=groups[i]['group_name'], group_id=groups[i]['group_id'], user_email=userEmail) }}">{{ groups[i]["group_name"] }}</a></td>
                     <td class="button-cell">
                         <button class="view-description-btn" onclick="openDescriptionModal('openDescription', {{ groups[i] }})">Description</button>
                     </td> 

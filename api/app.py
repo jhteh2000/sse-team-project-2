@@ -76,7 +76,8 @@ def foodSearchResults():
 
 @app.route("/user-groups")
 def user_groups():
-    user_email = 'user1@gmail.com' # Need to change to current_user.email in production
+   # user_email = 'user1@gmail.com' # Need to change to current_user.email in production
+    user_email = current_user.email
     try:
         server_url = "http://127.0.0.1:3000/display-user-groups"
         payload = {'userEmail': user_email}
@@ -101,6 +102,7 @@ def user_groups():
 def group_info():
     group_name = request.args.get('group_name')
     group_id = request.args.get('group_id')
+    user_email = request.args.get('user_email')
     try:
         # Define the server URLs
         members_url = "http://127.0.0.1:3000/display-group-members"
@@ -127,7 +129,7 @@ def group_info():
         print("Votes data received:", votes_data)
 
         # Render the template and pass the data
-        return render_template("group_info.html", group_name=group_name, group_id=group_id, members_info=members_data, votes_info=votes_data)
+        return render_template("group_info.html", group_name=group_name, group_id=group_id, members_info=members_data, votes_info=votes_data, user_email=user_email)
 
     except requests.HTTPError as http_err:
         # If there is an HTTPError, return the error message
@@ -237,6 +239,37 @@ def remove_selected_food():
     except Exception as e:
         return jsonify({'error': 'Failed to remove food item'}), 500
 
-@app.route("/vote")
+@app.route('/vote')
 def vote():
-    return render_template("vote.html")
+    group_name = request.args.get('group_name')
+    group_id = request.args.get('group_id')
+    user_email = request.args.get('user_email')
+    
+    # Call Group Service to get dishes to vote on
+    group_service_url = 'http://127.0.0.1:3000/display-vote-options'
+    group_service_payload = {'groupId': group_id, 'userEmail': user_email}
+    group_service_response = requests.post(group_service_url, json=group_service_payload)
+    
+    if group_service_response.status_code == 200:
+            dishes_data = group_service_response.json()
+            print(dishes_data)
+            dish_uri_list = []
+            for dish in dishes_data:
+                dish_uri_list.append(dish["dish_uri"])
+
+            print(dish_uri_list)
+            print(dish_uri_list[0])
+            print(dish_uri_list[1])
+            # Now, make a request to the Food Finder service for detailed dish information
+            food_finder_service_url = 'http://127.0.0.1:4000/display-votes'
+            food_finder_payload = {'dish_uri_list': dish_uri_list}
+            food_finder_response = requests.post(food_finder_service_url, json=food_finder_payload)
+
+            if food_finder_response.status_code == 200:
+                detailed_dishes = food_finder_response.json()
+                return render_template('voting.html', dishes=detailed_dishes, dishes_data=dishes_data, group_name=group_name, group_id=group_id, user_email=user_email)
+            else:
+                return 'Error retrieving detailed dishes information', 500
+    else:
+        # Handle error: Group service didn't return the expected response
+        return 'Error retrieving dishes to vote on', 500

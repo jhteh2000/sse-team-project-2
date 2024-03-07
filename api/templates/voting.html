@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dish Voting</title>
+    <link rel="stylesheet" href="../static/css/profile.css">
+    <style>
+        .food-box {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* Aligns content and button properly */
+            height: 100%; /* Ensures full height usage */
+        /* Vote Button Style */
+        .vote-btn {
+            align-self: center;
+            margin-top: auto;
+            padding: 10px 20px;
+            width: auto;
+            color: white;
+            background-color: blue;
+            border: none;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-weight: bold;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        .vote-btn:active {
+            transform: scale(0.95);
+            background-color: navy;
+        }
+
+        /* Cancel Vote Button Style */
+        .cancel-btn {
+            align-self: center;
+            margin-top: auto;
+            padding: 10px 20px;
+            width: auto;
+            color: white;
+            background-color: red;
+            border: none;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-weight: bold;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        .cancel-btn:active {
+            transform: scale(0.95);
+            background-color: darkred;
+        }
+    </style>
+</head>
+<body>
+    <div id="userProfileContainer" class="container">
+        <h1>{{ group_name }} as user {{ user_email }}</h1>
+        <h2>Dish Voting</h2>
+
+    {% if dishes|count > 0 %}
+        <div class="favorites-grid">
+        {% for fav in dishes%}
+        <div class="food-box" data-uri='{{ fav["uri"] | tojson }}' data-ingredientlist='{{ fav["ingredient"] | tojson }}' data-recipeurl='{{ fav["recipeURL"] | tojson }}'>
+            <img src="{{ fav['image'] }}" alt="{{ fav['name'] }}">
+            <h3>{{ fav['name'] }}</h3>
+            <div class="details">
+                <p>Calories: {{ fav['calories'] }} kcal</p>
+                <p>Protein: {{ fav['protein'] }} g</p>
+                <p>Current Vote Count: {{ dishes_data[loop.index0]['votes_count'] }}</p>
+            </div>
+            {% if dishes_data[loop.index0]['voted_by_user'] == 0 %}
+            <button class="vote-btn" data-group-id="{{ group_id }}" data-user-email="{{ user_email }}" data-dish-uri="{{dishes_data[loop.index0]['dish_uri']}}">Vote</button>
+            {% else %}
+            <button class="cancel-btn" data-group-id="{{ group_id }}" data-user-email="{{ user_email }}" data-dish-uri="{{dishes_data[loop.index0]['dish_uri']}}">Cancel Vote</button>  
+            {% endif %}
+        </div>
+        {% endfor %}
+        <br><br>
+        </div>
+	{% else %}
+		<p>Favorites list is empty! </p>
+	{% endif %}
+    </div>
+
+    <div class="button-container">
+        <a href="javascript:history.back()" class="button">Back to Previous Page</a>
+        <a href="/" class="button">Return to Homepage</a>
+    </div>
+
+    <script src="../static/js/vote.js"></script>
+</body>
+<style>
+    body {
+      background-image: url('https://images.unsplash.com/photo-1607619784547-07ac0be98721?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDE0fHx8ZW58MHx8fHx8&w=1000&q=80');
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-size: cover;
+    }
+</style> 
+</html>
