@@ -3,7 +3,7 @@ from api import create_app, config
 
 @pytest.fixture(scope="session")
 def app():
-    app = create_app(config.Config)
+    app = create_app(config.TestConfig)
 
     yield app
 
