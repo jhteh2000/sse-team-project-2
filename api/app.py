@@ -256,9 +256,6 @@ def vote():
             for dish in dishes_data:
                 dish_uri_list.append(dish["dish_uri"])
 
-            print(dish_uri_list)
-            print(dish_uri_list[0])
-            print(dish_uri_list[1])
             # Now, make a request to the Food Finder service for detailed dish information
             food_finder_service_url = 'http://127.0.0.1:4000/display-votes'
             food_finder_payload = {'dish_uri_list': dish_uri_list}

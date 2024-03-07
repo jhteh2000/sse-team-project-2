@@ -23,7 +23,6 @@
     <div class="container">
         <div id="buttons">
             <button onclick="openModal('create')">Create Group</button>
-            <a href="{{ url_for('index') }}" class="btn btn-primary">Back to Front Page</a>
         </div>
 
         <h2>Pending Invitations</h2>
@@ -68,6 +67,10 @@
                 {% endif %}
             {% endfor %}
         </table>
+        <div class="return-button-container">
+            <a href="javascript:history.back()" class="return-button">Back to Previous Page</a>
+            <a href="/" class="return-button">Return to Homepage</a>
+        </div>
     </div>
 
     <div id="createGroupModal" class="modal">
