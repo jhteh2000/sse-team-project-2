@@ -1,32 +1,55 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
     justify-content: center;
-    align-items: flex-start;
-    background-color: #f4f4f4;
-    margin: 0; 
-    padding: 20px;
+    background: linear-gradient(to bottom right, #3498db, #2ecc71);
     height: auto;
 }
 
-h1 {
-    width: 100%; 
-    text-align: center; 
-    color: #333;
-    margin: 20px 0;
+.container {
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
 }
 
-.food-list-header {
+#userProfileContainer {
+    max-width: 1000px; /* Or your preferred max width */
+    text-align: center;
+    margin: auto; /* Center the container */
+    padding: 20px;
+    background-color: #f8f8f8; /* Light background for the container */
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    color: #333;
     font-size: 2em;
-    color: #f4f4f4;
-    font-weight: bold;
     margin-bottom: 20px;
 }
 
+p {
+    margin: 0;
+    font-size: 18px;
+}
+
+.favorites-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 20px;
+    /* other styles */
+}
+
+/* Food-box */
 .food-box {
     position: relative; /* Set the position to relative for absolute positioning inside */
-    width: 25%; 
     max-width: 300px; 
     box-sizing: border-box;
     margin: 10px;
@@ -37,43 +60,7 @@ h1 {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     text-align: center;
     height: 480px;
-}
 
-.no-results-text {
-    color: #d6dad6;
-    font-size: 2em;
-}
-
-.no-results-text {
-    color: #d6dad6;
-    font-size: 2em;
-}
-
-.no-results-text {
-    color: #d6dad6;
-    font-size: 2em;
-}
-
-/* Add this to your existing CSS file or create a new one, e.g., profile-button.css */
-
-.my-profile-button {
-  display: inline-block;
-  padding: 10px 20px;
-  background-color: #3498db; /* Button background color */
-  color: #fff; /* Button text color */
-  text-decoration: none;
-  border-radius: 5px; /* Optional: Adds rounded corners */
-  transition: background-color 0.3s ease; /* Smooth transition for background color */
-
-  /* Optional: Add hover effect */
-  &:hover {
-    background-color: #2980b9; /* Hover background color */
-  }
-
-  /* Additional styling for positioning at the top right */
-  position: absolute;
-  top: 10px; /* Adjust as needed */
-  right: 10px; /* Adjust as needed */
 }
 
 img {
@@ -117,7 +104,7 @@ img {
     z-index: 1000;
     display: none;
 }
-  
+
 #hoverWindow p {
     margin: 0;
 }
@@ -148,11 +135,9 @@ img {
     height: 20px;
     opacity: 0.3;
 }
-
 #closeWindowBtn:hover {
     opacity: 1;
 }
-
 #closeWindowBtn:before, #closeWindowBtn:after {
     position: absolute;
     left: 10px;
@@ -161,18 +146,16 @@ img {
     width: 2px;
     background-color: #333;
 }
-
 #closeWindowBtn:before {
     transform: rotate(45deg);
 }
-
 #closeWindowBtn:after {
     transform: rotate(-45deg);
 }
 
 
 /* Return button */
-.button {
+.return-button {
     display: inline-block;
     padding: 10px 20px;
     margin: 10px;
@@ -186,11 +169,11 @@ img {
     cursor: pointer;
 }
 
-.button:hover {
+.return-button:hover {
     background-color: #a04598; /* Darker green background on hover */
 }
 
-.button-container {
+.return-button-container {
     position: fixed;
     bottom: 0;
     left: 0;

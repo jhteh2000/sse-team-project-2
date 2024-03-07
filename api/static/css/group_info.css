@@ -131,3 +131,33 @@ button:hover,
 .link-to-vote-btn:hover {
     background-color: #6b46c1;
 }
+
+/* Return button */
+.return-button {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 10px;
+    background-color: rgb(24, 15, 161); /* Green background */
+    color: white; /* White text */
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.return-button:hover {
+    background-color: #a04598; /* Darker green background on hover */
+}
+
+.return-button-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(105, 127, 141, 0.8); /* or any color you prefer */
+    text-align: center;
+    padding: 10px 0;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+}
