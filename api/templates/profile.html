@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../static/css/profile.css">
 </head>
 <body>
-    <div id="userProfileContainer" class="container">
+    <div id="userProfileContainer" data-user-email="{{ current_user.email }}">
         <h1>My Profile</h1>
         <p><strong>First Name:</strong> {{ current_user.first_name }}</p>
         <p><strong>Last Name:</strong> {{ current_user.last_name }}</p>
@@ -26,7 +26,7 @@
                 <p>Protein: {{ fav['protein'] }} g</p>
             </div>
             <button class="favorite-btn active"></button>
-            <button class="add-to-group-btn active"></button>
+            <button class="add-to-group-btn" onclick="addToGroup()">Add to group</button>
         </div>
         {% endfor %}
         <br><br>
@@ -52,6 +52,8 @@
 
     <script src="../static/js/recipe.js"></script>
     <script src="../static/js/storeFav.js"></script>
+    <script src="../static/js/addFoodToGroup.js"></script>
+
 </body>
 <style>
     body {

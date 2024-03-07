@@ -57,7 +57,7 @@ def submit():
     args["dish"] = request.form.getlist("dish")
 
     if current_user.is_authenticated:
-        args["user"] = current_user.email
+            args["user"] = current_user.email
     else:
         args["user"] = None
 
@@ -75,12 +75,11 @@ def foodSearchResults():
     return render_template("results.html", results=data[0], favorites=data[1])
 
 @app.route("/user-groups")
+@login_required
 def user_groups():
-   # user_email = 'user1@gmail.com' # Need to change to current_user.email in production
-    user_email = current_user.email
     try:
         server_url = "http://127.0.0.1:3000/display-user-groups"
-        payload = {'userEmail': user_email}
+        payload = {'userEmail': current_user.email}
         headers = {'Content-Type': 'application/json'}
 
         print(f'Sending request to {server_url} with payload: {payload}')
@@ -90,7 +89,7 @@ def user_groups():
         groups_data = response.json()
         print(f'Received response: {groups_data}')
 
-        return render_template("user_groups.html", groups=groups_data, userEmail=user_email)
+        return render_template("user_groups.html", groups=groups_data, userEmail=current_user.email)
     except requests.HTTPError as http_err:
         print(f"HTTP error occurred: {http_err}")
         return f"HTTP error occurred: {http_err}", 500
