@@ -191,19 +191,19 @@ tr:nth-child(even) {
 tr:hover {
     background-color: #f2f2f2;
 }
-  
+
 /* Table Cell */
 td {
     padding: 12px 16px;
     border: 1px solid #ddd;
     font-size: 14px;
 }
-  
+
 /* Padding for the Last Column */
 td:last-child {
     padding-right: 24px;
 }
-  
+
 /* First Column (Group Name) - 20% */
 td:nth-child(1),
 th:nth-child(1) {
@@ -221,7 +221,7 @@ td:nth-child(3),
 th:nth-child(3) {
     width: 40%;
 }
-  
+
 /* Button Styles */
 .accept-btn, .decline-btn {
     padding: 6px 12px;
@@ -229,7 +229,7 @@ th:nth-child(3) {
     cursor: pointer;
     font-size: 12px;
 }
-  
+
 /* Accept Button Style */
 .accept-btn {
     background-color: #4CAF50;
@@ -238,7 +238,7 @@ th:nth-child(3) {
     margin-left: 2px;
     margin-right: 2px;
 }
-  
+
 /* Decline Button Style */
 .decline-btn {
     background-color: #f44336;

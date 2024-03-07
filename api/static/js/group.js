@@ -70,7 +70,6 @@ function submitGroup() {
     });
 }
 
-
 function openDescriptionModal(action, index) {
     console.log("openDescriptionModal called with action:", action, "and index:", index);
 
@@ -94,42 +93,11 @@ function closeDescriptionModal() {
     descriptionModal.style.display = "none";
 }
 
-
 // Placeholder function for logout
 function logout() {
     alert("Logout functionality will be implemented here.");
     // Add logout functionality here
 }
-/*
-// Function to handle accepting or declining an invitation
-function handleInvitation(button, action) {
-    // Get the table row
-    var row = button.parentNode.parentNode;
-
-    // Remove the row from the pending table
-    row.parentNode.removeChild(row);
-    
-    // If the action is accept, move the row to the joined table
-    if (action === 'accept') {
-        var groupName = row.getElementsByTagName('td')[1].innerText;
-        var description = row.getElementsByTagName('td')[2].querySelector('.view-description-btn').outerHTML;
-        console.log(description);
-        
-        // Append the row to the "Joined Parties" table
-        var joinedTable = document.getElementById("joined");
-        var newRow = joinedTable.insertRow();
-        newRow.innerHTML = '<td></td>' + // Auto-numbered column
-                           '<td>' + groupName + '</td>' +
-                           '<td>' + description + '</td>';
-                           
-        // Re-number the rows
-        renumberRows(joinedTable);
-        
-        // Sort the table based on event date
-        sortTableByDate(joinedTable);
-    }
-}
-*/
 
 // Function to retrieve the event date based on the group name
 function getEventDate(groupName) {
