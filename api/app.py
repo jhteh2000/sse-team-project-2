@@ -117,7 +117,7 @@ def foodfinder():
 
 # The form submitted in the food page will go to this route
 @app.route("/foodfinder/submit", methods=["POST"])
-def submit():
+def submit_search():
     # Retrieve the form value and add into a dictionary
     args = {}
     args["dishname"] = request.form.get("dishname")
@@ -134,11 +134,11 @@ def submit():
     response = requests.post("http://127.0.0.1:4000", json=args)
 
     if response.status_code == 200:
-        return redirect(url_for("foodSearchResults", data=response.text))
+        return redirect(url_for("food_search_results", data=response.text))
 
 # Food finder search results page
 @app.route("/foodfinder/results")
-def foodSearchResults():
+def food_search_results():
     data = json.loads(request.args.get("data"))
 
     return render_template("results.html", results=data[0], favorites=data[1])
