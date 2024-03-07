@@ -170,7 +170,7 @@ def user_groups():
 def group_info():
     group_name = request.args.get('group_name')
     group_id = request.args.get('group_id')
-    user_email = request.args.get('user_email')
+    user_email = current_user.email
     group_status = request.args.get('group_status')
     try:
         # Define the server URLs

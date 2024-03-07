@@ -12,8 +12,6 @@ function addToGroup(){
 
     console.log('JSON data sent:', jsonData);
 
-    alert('Food added successfully!');
-
     fetch('http://127.0.0.1:3000//add-food-to-groups', {
         method: 'POST',
         headers: {
@@ -25,10 +23,12 @@ function addToGroup(){
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
+        
         return response.json();
     })
     .then(data => {
         console.log('Server response:', data);
+        alert(data['message']);
         closeModal();
         window.location.reload();
     })
