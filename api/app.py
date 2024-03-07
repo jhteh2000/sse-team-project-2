@@ -265,6 +265,8 @@ def vote():
                 detailed_dishes = food_finder_response.json()
                 return render_template('voting.html', dishes=detailed_dishes, dishes_data=dishes_data, group_name=group_name, group_id=group_id, user_email=user_email)
             else:
+                detailed_dishes = []
+                return render_template('voting.html', dishes=detailed_dishes, dishes_data=dishes_data, group_name=group_name, group_id=group_id, user_email=user_email)
                 return 'Error retrieving detailed dishes information', 500
     else:
         # Handle error: Group service didn't return the expected response
