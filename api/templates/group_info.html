@@ -51,35 +51,39 @@
             <h2>Top Voted Dishes</h2>
             <a href="{{ url_for('vote', group_name=group_name, group_id=group_id, user_email=user_email) }}" class="link-to-vote-btn">Vote for Dishes</a>
         </div>
-        <table id="topVotes">
-            <thead>
-                <tr>
-                    <th>Rank</th>
-                    <th>Details</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for vote in votes_info %}
+        {% if votes_info|count > 0 %}
+            <table id="topVotes">
+                <thead>
                     <tr>
-                        <td>{{ loop.index }}</td>
-                        <td>
-                                <div class="favorites-grid">
-                                    <div class="food-box" data-uri='{{ food_finder_data[loop.index0]["uri"] | tojson }}' data-ingredientlist='{{ food_finder_data[loop.index0]["ingredient"] | tojson }}' data-recipeurl='{{ food_finder_data[loop.index0]["recipeURL"] | tojson }}'>
-                                        <img src="{{ food_finder_data[loop.index0]['image'] }}" alt="{{ food_finder_data[loop.index0]['name'] }}">
-                                        <h3>{{ food_finder_data[loop.index - 1]['name'] }}</h3>
-                                        <div class="details">
-                                            <p>Calories: {{ food_finder_data[loop.index0]['calories'] }} kcal</p>
-                                            <p>Protein: {{ food_finder_data[loop.index0]['protein'] }} g</p>
-                                            <p>Current Vote Count: {{ vote['votes_count'] }}</p>
-                                        </div>
-                                    </div>
-                                    <br><br>
-                                </div>
-                        </td>
+                        <th>Rank</th>
+                        <th>Details</th>
                     </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    {% for vote in votes_info %}
+                        <tr>
+                            <td>{{ loop.index }}</td>
+                            <td>
+                                    <div class="favorites-grid">
+                                        <div class="food-box" data-uri='{{ food_finder_data[loop.index0]["uri"] | tojson }}' data-ingredientlist='{{ food_finder_data[loop.index0]["ingredient"] | tojson }}' data-recipeurl='{{ food_finder_data[loop.index0]["recipeURL"] | tojson }}'>
+                                            <img src="{{ food_finder_data[loop.index0]['image'] }}" alt="{{ food_finder_data[loop.index0]['name'] }}">
+                                            <h3>{{ food_finder_data[loop.index - 1]['name'] }}</h3>
+                                            <div class="details">
+                                                <p>Calories: {{ food_finder_data[loop.index0]['calories'] }} kcal</p>
+                                                <p>Protein: {{ food_finder_data[loop.index0]['protein'] }} g</p>
+                                                <p>Current Vote Count: {{ vote['votes_count'] }}</p>
+                                            </div>
+                                        </div>
+                                        <br><br>
+                                    </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>There is currently no food voted!</p>
+        {% endif %}
     </div>
     <div class="return-button-container">
         <a href="javascript:history.back()" class="return-button">Back to Previous Page</a>
