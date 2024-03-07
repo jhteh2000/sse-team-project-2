@@ -4,11 +4,13 @@ TEST_LOGIN_VALID = {"email": "test@email.com", "password": "test123"}
 TEST_LOGIN_INVALID_EMAIL = {"email": "faketest@email.com", "password": "test123"}
 TEST_LOGIN_INVALID_PASSWORD = {"email": "test@email.com", "password": "321tset"}
 
+
 def test_index_page(client):
     response = client.get("/")
     # Will return index page with FoodHub header1
     assert response.status_code == 200
     assert b"<h1>FoodHub</h1>" in response.data
+
 
 def test_food_finder_page(client):
     # Will return food finder page with ChooseYourMeal header1
@@ -16,17 +18,20 @@ def test_food_finder_page(client):
     assert response.status_code == 200
     assert b"<h1>Choose Your Meal</h1>" in response.data
 
+
 def test_group_page_user_not_authenticated(client):
     response = client.get("/user-groups", follow_redirects=True)
     assert response.status_code == 200
     assert len(response.history) == 1
     assert response.request.path == "/login"
 
+
 def test_login_page_user_not_authenticated(client):
     # Will return login page with Login header2
     response = client.get("/login")
     assert response.status_code == 200
     assert b"<h2>Login</h2>" in response.data
+
 
 def test_login_page_user_login_with_valid_credentials(client):
     # Will redirect user to index page after login successfully
@@ -35,6 +40,7 @@ def test_login_page_user_login_with_valid_credentials(client):
     assert len(response.history) == 1
     assert response.request.path == "/"
 
+
 def test_login_page_user_login_with_invalid_email(client):
     # Will return login page with User Not Found error message
     response = client.post("/login", data=TEST_LOGIN_INVALID_EMAIL)
@@ -42,12 +48,14 @@ def test_login_page_user_login_with_invalid_email(client):
     assert b"<h2>Login</h2>" in response.data
     assert b"User Not Found" in response.data
 
+
 def test_login_page_user_login_with_invalid_password(client):
     # Will return login page with Incorrect Password error message
     response = client.post("/login", data=TEST_LOGIN_INVALID_PASSWORD)
     assert response.status_code == 200
     assert b"<h2>Login</h2>" in response.data
     assert b"Incorrect Password" in response.data
+
 
 def test_login_page_user_is_authenticated(client):
     # User logged in
@@ -59,15 +67,22 @@ def test_login_page_user_is_authenticated(client):
     assert len(response.history) == 1
     assert response.request.path == "/"
 
+
 def test_register_page(client):
     # Will return login page with Login header2
     response = client.get("/register")
     assert response.status_code == 200
     assert b"<h2>FoodHub - Register</h2>" in response.data
 
+
 def test_user_registration_and_login_with_unused_email(client):
     # Will return registration success page with Registration Successful! header2
-    new_user_info = {"firstName": "Fname", "lastName": "Lname", "email": "user1@test.com", "password": "test123"}
+    new_user_info = {
+        "firstName": "Fname",
+        "lastName": "Lname",
+        "email": "user1@test.com",
+        "password": "test123",
+    }
     response = client.post("/register", data=new_user_info)
     assert response.status_code == 200
     assert b"<h2>Registration Successful!</h2>" in response.data
@@ -82,9 +97,15 @@ def test_user_registration_and_login_with_unused_email(client):
     # Cleaning up from database
     db.delete_user_info("user1@test.com")
 
+
 def test_user_registration_with_existing_email(client):
-    new_user_info = {"firstName": "Fname", "lastName": "Lname", "email": "user1@test.com", "password": "test123"}
-    
+    new_user_info = {
+        "firstName": "Fname",
+        "lastName": "Lname",
+        "email": "user1@test.com",
+        "password": "test123",
+    }
+
     # First registration
     client.post("/register", data=new_user_info)
 
@@ -97,6 +118,7 @@ def test_user_registration_with_existing_email(client):
 
     # Cleaning up from database
     db.delete_user_info("user1@test.com")
+
 
 def test_logout_user_user_is_authenticated(client):
     # User logged in
