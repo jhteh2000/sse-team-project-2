@@ -48,8 +48,12 @@ h1 {
 }
 
 #buttons {
-    text-align: left;
+    text-align: right;
     margin-bottom: 20px;
+}
+
+.center-aligned-buttons {
+    text-align: center;
 }
 
 button {
@@ -66,6 +70,36 @@ button {
 
 button:hover {
     background-color: #0056b3;
+}
+
+/* Return button */
+.return-button {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 10px;
+    background-color: rgb(24, 15, 161); /* Green background */
+    color: white; /* White text */
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.return-button:hover {
+    background-color: #a04598; /* Darker green background on hover */
+}
+
+.return-button-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(105, 127, 141, 0.8); /* or any color you prefer */
+    text-align: center;
+    padding: 10px 0;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
 }
 
 h2 {
@@ -130,29 +164,29 @@ table {
     border-collapse: collapse;
     margin-bottom: 20px;
 }
-  
+
 /* Table Header */
 th {
     background-color: #f2f2f2;
     color: #333;
     font-weight: bold;
     padding: 12px 16px;
-    text-align: left;
+    text-align: center;
     border: 1px solid #ddd;
 }
-  
+
 /* Table Row */
 tr {
     text-align: center;
     background-color: #fff;
     transition: background-color 0.3s ease;
 }
-  
+
 /* Alternating Row Color */
 tr:nth-child(even) {
     background-color: #f9f9f9;
 }
-  
+
 /* Hover Effect on Rows */
 tr:hover {
     background-color: #f2f2f2;
