@@ -38,12 +38,82 @@ def load_user(email):
 def index():
     return render_template("index.html")
 
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    if current_user.is_authenticated is False:
+        if request.method == "POST":
+            email = request.form.get("email")
+            password = request.form.get("password")
+            
+            # Retrieve user data from the database
+            user_data = fetch_user_info(email)
+            
+            if user_data:
+                user = User(user_data[0]['email'], user_data[0]['firstname'], user_data[0]['lastname'], user_data[0]['password'])
 
+                if check_password_hash(user.password, password):
+                    login_user(user, remember=True, duration=timedelta(weeks=1))
+                    next = request.args.get("next")
+                    return redirect(next or url_for("index"))
+                
+                # Return incorrect password error message if password hash does not match
+                return render_template("login.html", error="Incorrect Password")
+            
+            # Return user not found error message if email is not in database
+            return render_template("login.html", error="User Not Found")
+        
+        # Default login page if using HTTP GET method
+        return render_template("login.html")
+    else:
+        # Redirect to homepage if authenticated user attempted to login again
+        return redirect(url_for("index"))
+
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    if request.method == "POST":
+        firstName = request.form.get("firstName")
+        lastName = request.form.get("lastName")
+        email = request.form.get("email")
+        password = request.form.get("password")
+
+        new_user_info = {
+            "email": email,
+            "firstname": firstName,
+            "lastname": lastName,
+            "password": generate_password_hash(password),
+        }
+
+        # The database will raise APIError exception if the email is taken as it will violate the primary key rule
+        try:
+            insert_user_info(new_user_info)
+        except APIError:
+            return render_template("register.html", error="The email has already been taken")
+
+        return render_template("registration_success.html", name=firstName)
+    
+    # Default register page if using HTTP GET method
+    return render_template("register.html")
+
+@app.route("/profile")
+@login_required
+def profile():
+    response = requests.post("http://127.0.0.1:4000/favourites", data={"user": current_user.email})
+    data = []
+    
+    if response.status_code == 200:
+        data = response.json()
+    
+    return render_template("profile.html", favorites=data)
+
+@app.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for("index"))
 # Food finder page
 @app.route("/foodfinder")
 def foodfinder():
     return render_template("foodfinder.html")
-
 
 # The form submitted in the food page will go to this route
 @app.route("/foodfinder/submit", methods=["POST"])
@@ -65,7 +135,6 @@ def submit():
 
     if response.status_code == 200:
         return redirect(url_for("foodSearchResults", data=response.text))
-
 
 # Food finder search results page
 @app.route("/foodfinder/results")
@@ -139,83 +208,6 @@ def group_info():
         print("Error:", str(e))
         return f"An error occurred: {str(e)}", 500
 
-
-@app.route("/login", methods=["GET", "POST"])
-def login():
-    if current_user.is_authenticated is False:
-        if request.method == "POST":
-            email = request.form.get("email")
-            password = request.form.get("password")
-            
-            # Retrieve user data from the database
-            user_data = fetch_user_info(email)
-            
-            if user_data:
-                user = User(user_data[0]['email'], user_data[0]['firstname'], user_data[0]['lastname'], user_data[0]['password'])
-
-                if check_password_hash(user.password, password):
-                    login_user(user, remember=True, duration=timedelta(weeks=1))
-                    next = request.args.get("next")
-                    return redirect(next or url_for("index"))
-                
-                # Return incorrect password error message if password hash does not match
-                return render_template("login.html", error="Incorrect Password")
-            
-            # Return user not found error message if email is not in database
-            return render_template("login.html", error="User Not Found")
-        
-        # Default login page if using HTTP GET method
-        return render_template("login.html")
-    else:
-        # Redirect to homepage if authenticated user attempted to login again
-        return redirect(url_for("index"))
-
-
-@app.route("/register", methods=["GET", "POST"])
-def register():
-    if request.method == "POST":
-        firstName = request.form.get("firstName")
-        lastName = request.form.get("lastName")
-        email = request.form.get("email")
-        password = request.form.get("password")
-
-        new_user_info = {
-            "email": email,
-            "firstname": firstName,
-            "lastname": lastName,
-            "password": generate_password_hash(password),
-        }
-
-        # The database will raise APIError exception if the email is taken as it will violate the primary key rule
-        try:
-            insert_user_info(new_user_info)
-        except APIError:
-            return render_template("register.html", error="The email has already been taken")
-
-        return render_template("registration_success.html", name=firstName)
-    
-    # Default register page if using HTTP GET method
-    return render_template("register.html")
-
-
-@app.route("/profile")
-@login_required
-def profile():
-    response = requests.post("http://127.0.0.1:4000/favourites", data={"user": current_user.email})
-    data = []
-    
-    if response.status_code == 200:
-        data = response.json()
-    
-    return render_template("profile.html", favorites=data)
-
-
-@app.route("/logout")
-@login_required
-def logout():
-    logout_user()
-    return redirect(url_for("index"))
-
 @app.route("/add_selected_food", methods=['POST'])
 @login_required
 def add_selected_food():
@@ -267,7 +259,6 @@ def vote():
             else:
                 detailed_dishes = []
                 return render_template('voting.html', dishes=detailed_dishes, dishes_data=dishes_data, group_name=group_name, group_id=group_id, user_email=user_email)
-                return 'Error retrieving detailed dishes information', 500
     else:
         # Handle error: Group service didn't return the expected response
         return 'Error retrieving dishes to vote on', 500
