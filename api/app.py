@@ -194,10 +194,25 @@ def group_info():
         members_data = response_members.json()
         votes_data = response_votes.json()
 
+        # Extract dish URIs for detailed information
+        dish_uri_list = [dish["dish_uri"] for dish in votes_data]
+
+        # Now, make a request to the Food Finder service for detailed dish information
+        food_finder_service_url = 'http://127.0.0.1:4000/display-votes'
+        food_finder_payload = {'dish_uri_list': dish_uri_list}
+        food_finder_response = requests.post(food_finder_service_url, json=food_finder_payload)
+
+        # Raise an exception if there was an error with the request
+        food_finder_response.raise_for_status()
+
+        # Extract the data from the response
+        food_finder_data = food_finder_response.json()
+
         print("Members data received:", members_data)
         print("Votes data received:", votes_data)
+        print("Food Finder data received:", food_finder_data)
         # Render the template and pass the data
-        return render_template("group_info.html", group_name=group_name, group_id=group_id, members_info=members_data, votes_info=votes_data, user_email=user_email, group_status=group_status)
+        return render_template("group_info.html", group_name=group_name, group_id=group_id, members_info=members_data, votes_info=votes_data, user_email=user_email, food_finder_data=food_finder_data, group_status=group_status)
 
     except requests.HTTPError as http_err:
         # If there is an HTTPError, return the error message
