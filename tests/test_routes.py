@@ -16,13 +16,13 @@ def test_food_finder_page(client):
     assert response.status_code == 200
     assert b"<h1>Choose Your Meal</h1>" in response.data
 
-def test_group_page_without_authentication(client):
+def test_group_page_user_not_authenticated(client):
     response = client.get("/user-groups", follow_redirects=True)
     assert response.status_code == 200
     assert len(response.history) == 1
     assert response.request.path == "/login"
 
-def test_login_page_without_authentication(client):
+def test_login_page_user_not_authenticated(client):
     # Will return login page with Login header2
     response = client.get("/login")
     assert response.status_code == 200
@@ -49,7 +49,7 @@ def test_login_page_user_login_with_invalid_password(client):
     assert b"<h2>Login</h2>" in response.data
     assert b"Incorrect Password" in response.data
 
-def test_login_page_with_authentication(client):
+def test_login_page_user_is_authenticated(client):
     # User logged in
     client.post("/login", data=TEST_LOGIN_VALID)
 
@@ -97,3 +97,13 @@ def test_user_registration_with_existing_email(client):
 
     # Cleaning up from database
     db.delete_user_info("user1@test.com")
+
+def test_logout_user_user_is_authenticated(client):
+    # User logged in
+    client.post("/login", data=TEST_LOGIN_VALID)
+
+    # Will redirect user to index page
+    response = client.get("/logout", follow_redirects=True)
+    assert response.status_code == 200
+    assert len(response.history) == 1
+    assert response.request.path == "/"
