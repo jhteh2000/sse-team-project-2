@@ -1,8 +1,6 @@
-from flask import Flask, render_template, redirect, url_for, request, jsonify
+from flask import current_app as app, render_template, redirect, url_for, request, jsonify
 from dotenv import load_dotenv
-import os
 from flask_login import (
-    LoginManager,
     login_user,
     logout_user,
     login_required,
@@ -18,20 +16,6 @@ from postgrest.exceptions import APIError
 from functions.database_functions import insert_user_info, insert_user_favorites, delete_user_favorites
 
 load_dotenv()
-
-# Flask app configuration
-app = Flask(__name__)
-app.secret_key = os.getenv("FLASK_SECRET_KEY")
-
-# Setting up flask login manager
-login_manager = LoginManager()
-login_manager.init_app(app)
-login_manager.login_view = "login"
-
-
-@login_manager.user_loader
-def load_user(email):
-    return User.get(email)
 
 
 @app.route("/")

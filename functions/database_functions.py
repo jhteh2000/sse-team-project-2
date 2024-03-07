@@ -16,17 +16,20 @@ def fetch_user_info(email):
 
     return data[1]
 
-def insert_user_info(new_user_info):
+def insert_user_info(user_info):
     """
-    new_user_info example:
-    new_user_info = {
+    user_info example:
+    user_info = {
         "email": email,
         "firstname": firstName,
         "lastname": lastName,
         "password": generate_password_hash(password),
     }
     """
-    data, count = supabase_client.table("User Registration").insert(new_user_info).execute()
+    data, count = supabase_client.table("User Registration").insert(user_info).execute()
+
+def delete_user_info(email):
+    data, count = supabase_client.table("User Registration").delete().eq("email", email).execute()
 
 def insert_user_favorites(email, uri):
     favorite_data = {"email": email, "dish_uri": uri}
