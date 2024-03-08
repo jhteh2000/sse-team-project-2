@@ -56,12 +56,12 @@
     <div id="userProfileContainer" class="container">
         <h1>{{ group_name }}</h1>
         <h2>Dish Voting</h2>
+    {% if dishes|count > 0 %}
         <h3>You have {{ vote_remain }} votes left</h3>
         {% if vote_remain == 0 %}
         <h4 style="color: red;">You cannot vote anymore!</h4>
         {% endif %}
 
-    {% if dishes|count > 0 %}
         <div class="favorites-grid">
         {% for fav in dishes%}
         <div class="food-box" data-uri='{{ fav["uri"] | tojson }}' data-ingredientlist='{{ fav["ingredient"] | tojson }}' data-recipeurl='{{ fav["recipeURL"] | tojson }}'>
@@ -86,6 +86,7 @@
 	{% endif %}
     </div>
 
+    <br><br>
     <div class="return-button-container">
         <a href="javascript:history.back()" class="return-button">Back to Previous Page</a>
         <a href="/" class="return-button">Return to Homepage</a>
