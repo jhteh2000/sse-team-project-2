@@ -12,20 +12,6 @@ def test_index_page(client):
     assert b"<h1>FoodHub</h1>" in response.data
 
 
-def test_food_finder_page(client):
-    # Will return food finder page with ChooseYourMeal header1
-    response = client.get("/foodfinder")
-    assert response.status_code == 200
-    assert b"<h1>Choose Your Meal</h1>" in response.data
-
-
-def test_group_page_user_not_authenticated(client):
-    response = client.get("/user-groups", follow_redirects=True)
-    assert response.status_code == 200
-    assert len(response.history) == 1
-    assert response.request.path == "/login"
-
-
 def test_login_page_user_not_authenticated(client):
     # Will return login page with Login header2
     response = client.get("/login")
@@ -129,3 +115,72 @@ def test_logout_user_user_is_authenticated(client):
     assert response.status_code == 200
     assert len(response.history) == 1
     assert response.request.path == "/"
+
+
+def test_logout_user_user_not_authenticated(client):
+    # Will redirect user to login page
+    response = client.get("/logout", follow_redirects=True)
+    assert response.status_code == 200
+    assert len(response.history) == 1
+    assert response.request.path == "/login"
+
+
+def test_profile_page_user_is_authenticated(client):
+    # User logged in
+    client.post("/login", data=TEST_LOGIN_VALID)
+
+    # Will return profile page with user details
+    response = client.get("/profile")
+    assert response.status_code == 200
+    assert b"<h1>My Profile</h1>" in response.data
+    assert b"TestFirst" in response.data
+
+
+def test_profile_page_user_not_authenticated(client):
+    # Will redirect user to login page
+    response = client.get("/profile", follow_redirects=True)
+    assert response.status_code == 200
+    assert len(response.history) == 1
+    assert response.request.path == "/login"
+
+
+def test_food_finder_page(client):
+    # Will return food finder page with ChooseYourMeal header1
+    response = client.get("/foodfinder")
+    assert response.status_code == 200
+    assert b"<h1>Choose Your Meal</h1>" in response.data
+
+
+def test_food_finder_submit_form_data(client):
+    # Will redirect user to results page
+    form_data = {
+        "dishname": "",
+        "diet": [],
+        "health": ["Peanut-Free"],
+        "cuisine": ["british"],
+        "dish": ["main course"],
+    }
+    response = client.post("/foodfinder/submit", data=form_data, follow_redirects=True)
+    assert response.status_code == 200
+    assert len(response.history) == 1
+    assert response.request.path == "/foodfinder/results"
+    assert b"Here's the food list!" in response.data
+
+
+def test_foodie_party_page_user_not_authenticated(client):
+    # Will redirect user to login page
+    response = client.get("/user-groups", follow_redirects=True)
+    assert response.status_code == 200
+    assert len(response.history) == 1
+    assert response.request.path == "/login"
+
+
+def test_foodie_party_page_user_is_authenticated(client):
+    # User logged in
+    client.post("/login", data=TEST_LOGIN_VALID)
+
+    # Will return foodie party group page
+    response = client.get("/user-groups")
+    assert response.status_code == 200
+    assert b"<h1>Foodie Party</h1>" in response.data
+    assert b"<h2>My Groups</h2>" in response.data
