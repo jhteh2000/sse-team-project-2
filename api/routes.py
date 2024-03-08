@@ -102,8 +102,9 @@ def register():
 @app.route("/profile")
 @login_required
 def profile():
+    # 'http://127.0.0.1:4000' # change to this url when testing locally
     response = requests.post(
-        "http://sse-food-finder.axejavf0e9egahge.uksouth.azurecontainer.io:4000/favourites",
+        "http://127.0.0.1:4000/favourites",
         data={"user": current_user.email},
     )
     data = []
@@ -143,8 +144,9 @@ def submit_search():
     else:
         args["user"] = None
 
+    # 'http://127.0.0.1:4000' # change to this url when testing locally
     response = requests.post(
-        "http://sse-food-finder.axejavf0e9egahge.uksouth.azurecontainer.io:4000",
+        "http://127.0.0.1:4000",
         json=args,
     )
 
@@ -164,6 +166,7 @@ def food_search_results():
 @login_required
 def user_groups():
     try:
+        # 'http://127.0.0.1:3000' # change to this url when testing locally
         server_url = "http://127.0.0.1:3000/display-user-groups"
         payload = {"userEmail": current_user.email}
         headers = {"Content-Type": "application/json"}
@@ -194,8 +197,9 @@ def group_info():
     group_status = request.args.get("group_status")
     try:
         # Define the server URLs
-        members_url = "http://sse-foodie-party.ebckbydaavdrc8cv.uksouth.azurecontainer.io:3000/display-group-members"
-        votes_url = "http://sse-foodie-party.ebckbydaavdrc8cv.uksouth.azurecontainer.io:3000/display-top-votes"
+        # 'http://127.0.0.1:3000' # change to this url when testing locally
+        members_url = "http://127.0.0.1:3000/display-group-members"
+        votes_url = "http://127.0.0.1:3000/display-top-votes"
 
         # Set the payload to include group_id or group_name depending on your API
         payload_members = {"groupId": group_id}
@@ -221,6 +225,7 @@ def group_info():
 
         if dish_uri_list:
             # Now, make a request to the Food Finder service for detailed dish information
+            # 'http://127.0.0.1:4000' # change to this url when testing locally
             food_finder_service_url = "http://127.0.0.1:4000/display-votes"
             food_finder_payload = {"dish_uri_list": dish_uri_list}
             food_finder_response = requests.post(
@@ -291,6 +296,7 @@ def vote():
     user_email = request.args.get("user_email")
 
     # Call Group Service to get dishes to vote on
+    # 'http://127.0.0.1:3000' # change to this url when testing locally
     group_service_url = "http://127.0.0.1:3000/display-vote-options"
     group_service_payload = {"groupId": group_id, "userEmail": user_email}
     group_service_response = requests.post(
@@ -305,6 +311,7 @@ def vote():
             dish_uri_list.append(dish["dish_uri"])
 
         # Now, make a request to the Food Finder service for detailed dish information
+        # 'http://127.0.0.1:4000' # change to this url when testing locally
         food_finder_service_url = "http://127.0.0.1:4000/display-votes"
         food_finder_payload = {"dish_uri_list": dish_uri_list}
         food_finder_response = requests.post(
