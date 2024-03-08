@@ -102,9 +102,7 @@ def register():
 @app.route("/profile")
 @login_required
 def profile():
-    response = requests.post(
-        "http://127.0.0.1:4000/favourites", data={"user": current_user.email}
-    )
+    response = requests.post("http://sse-food-finder.axejavf0e9egahge.uksouth.azurecontainer.io:4000/favourites", data={"user": current_user.email})
     data = []
 
     if response.status_code == 200:
@@ -142,7 +140,7 @@ def submit_search():
     else:
         args["user"] = None
 
-    response = requests.post("http://127.0.0.1:4000", json=args)
+    response = requests.post("http://sse-food-finder.axejavf0e9egahge.uksouth.azurecontainer.io:4000", json=args)
 
     if response.status_code == 200:
         return redirect(url_for("food_search_results", data=response.text))
@@ -190,8 +188,8 @@ def group_info():
     group_status = request.args.get("group_status")
     try:
         # Define the server URLs
-        members_url = "http://127.0.0.1:3000/display-group-members"
-        votes_url = "http://127.0.0.1:3000/display-top-votes"
+        members_url = "http://sse-foodie-party.ebckbydaavdrc8cv.uksouth.azurecontainer.io:3000/display-group-members"
+        votes_url = "http://sse-foodie-party.ebckbydaavdrc8cv.uksouth.azurecontainer.io:3000/display-top-votes"
 
         # Set the payload to include group_id or group_name depending on your API
         payload_members = {"groupId": group_id}
