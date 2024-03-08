@@ -48,7 +48,7 @@ function submitGroup() {
     console.log('JSON data sent:', jsonData);
 
     // 'http://127.0.0.1:3000' // change to this url when testing locally
-    fetch('http://127.0.0.1:3000/create-group', {
+    fetch('http://sse-foodie-party-service.uksouth.azurecontainer.io:3000/create-group', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -131,8 +131,8 @@ function handleInvitationResponse(groupId, userEmail, action) {
     // Determine the correct URL based on the action
     // 'http://127.0.0.1:3000' // change to this url when testing locally
     var url = action === 'accept' 
-        ? 'http://127.0.0.1:3000/accept-group' 
-        : 'http://127.0.0.1:3000/decline-group';
+        ? 'http://sse-foodie-party-service.uksouth.azurecontainer.io:3000/accept-group' 
+        : 'http://sse-foodie-party-service.uksouth.azurecontainer.io:3000/decline-group';
         console.log(url);
 
     fetch(url, {
@@ -183,7 +183,7 @@ function handleRemoveGroupResponse(groupId, userEmail) {
     console.log(userEmail);
     
     // 'http://127.0.0.1:3000' // change to this url when testing locally
-    var url = 'http://127.0.0.1:3000/remove-group';
+    var url = 'http://sse-foodie-party-service.uksouth.azurecontainer.io:3000/remove-group';
 
     fetch(url, {
         method: 'POST',

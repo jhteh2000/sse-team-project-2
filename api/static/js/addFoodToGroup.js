@@ -13,7 +13,7 @@ function addToGroup(){
     console.log('JSON data sent:', jsonData);
 
     // 'http://127.0.0.1:3000' // change to this url when testing locally
-    fetch('http://127.0.0.1:3000/add-food-to-groups', {
+    fetch('http://sse-foodie-party-service.uksouth.azurecontainer.io:3000/add-food-to-groups', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

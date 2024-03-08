@@ -2,8 +2,8 @@ function handleVoteResponse(groupId, userEmail, dishUri, action) {
     // Determine the correct URL based on the action
     // 'http://127.0.0.1:3000' // change to this url when testing locally
     var url = action === 'vote' 
-        ? 'http://127.0.0.1:3000/click-vote-dish' 
-        : 'http://127.0.0.1:3000/cancel-vote-dish';
+        ? 'http://sse-foodie-party-service.uksouth.azurecontainer.io:3000/click-vote-dish' 
+        : 'http://sse-foodie-party-service.uksouth.azurecontainer.io:3000/cancel-vote-dish';
 
     fetch(url, {
         method: 'POST',
