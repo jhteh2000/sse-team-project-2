@@ -190,6 +190,7 @@ def user_groups():
 
 
 @app.route("/group-info")
+@login_required
 def group_info():
     group_name = request.args.get("group_name")
     group_id = request.args.get("group_id")
@@ -290,6 +291,7 @@ def remove_selected_food():
 
 
 @app.route("/vote")
+@login_required
 def vote():
     group_name = request.args.get("group_name")
     group_id = request.args.get("group_id")
